@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import {
   ArrowLeft,
@@ -6,20 +7,22 @@ import {
   Clock,
   Loader2,
 } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Article } from '../types';
 import { ContentService } from '../services/contentService';
 
 interface ArticlesProps {
-  onNavigate: (page: string, slug?: string) => void;
+  onNavigate?: (page: string, slug?: string) => void;
 }
 
 export const Articles: React.FC<ArticlesProps> = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const currentPage = Math.max(
     1,
-    Number(searchParams.get('page')) || 1
+    Number(searchParams?.get('page')) || 1
   );
 
   const [articles, setArticles] = useState<Article[]>([]);
@@ -69,9 +72,14 @@ export const Articles: React.FC<ArticlesProps> = () => {
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return;
 
-    setSearchParams(
-      page === 1 ? {} : { page: String(page) }
-    );
+    const params = new URLSearchParams(searchParams?.toString() ?? '');
+    if (page === 1) {
+      params.delete('page');
+    } else {
+      params.set('page', String(page));
+    }
+    const query = params.toString();
+    router.push(query ? `/articles?${query}` : '/articles');
 
     window.scrollTo({
       top: 0,
@@ -145,7 +153,7 @@ export const Articles: React.FC<ArticlesProps> = () => {
               <button
                 type="button"
                 onClick={() => goToPage(1)}
-                className="mt-5 text-sm font-semibold text-[#1E4D30]"
+                className="mt-5 text-sm font-semibold text-[#1E4D30] cursor-pointer"
               >
                 Return to page 1
               </button>
@@ -170,7 +178,7 @@ export const Articles: React.FC<ArticlesProps> = () => {
               </p>
 
               <Link
-                to="/"
+                href="/"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-[#1E4D30] hover:text-[#8B6B3E]"
               >
                 <ArrowLeft size={14} />
@@ -184,7 +192,7 @@ export const Articles: React.FC<ArticlesProps> = () => {
               {articles.map((article) => (
                 <Link
                   key={article.id}
-                  to={`/articles/${article.slug}`}
+                  href={`/articles/${article.slug}`}
                   className="group bg-white border border-[#e5dfd3] rounded-lg overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300"
                 >
 
@@ -268,7 +276,7 @@ export const Articles: React.FC<ArticlesProps> = () => {
                   type="button"
                   disabled={currentPage === 1}
                   onClick={() => goToPage(currentPage - 1)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition-colors cursor-pointer"
                 >
                   <ArrowLeft size={15} />
                   Previous
@@ -284,7 +292,7 @@ export const Articles: React.FC<ArticlesProps> = () => {
                       key={page}
                       type="button"
                       onClick={() => goToPage(page)}
-                      className={`w-9 h-9 rounded-md text-sm font-semibold transition-colors ${
+                      className={`w-9 h-9 rounded-md text-sm font-semibold transition-colors cursor-pointer ${
                         page === currentPage
                           ? 'bg-[#1E4D30] text-white'
                           : 'text-[#39483e] hover:bg-white border border-transparent hover:border-[#d9d2c4]'
@@ -300,7 +308,7 @@ export const Articles: React.FC<ArticlesProps> = () => {
                   type="button"
                   disabled={currentPage === totalPages}
                   onClick={() => goToPage(currentPage + 1)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition-colors cursor-pointer"
                 >
                   Next
                   <ArrowRight size={15} />

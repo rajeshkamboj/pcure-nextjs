@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+"use client";
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { Search, Sparkles, BookOpen, ShieldCheck, ArrowRight, Activity, Leaf, Droplets, Clock, Loader2 } from 'lucide-react';
+import { Search, Sparkles, BookOpen, ShieldCheck, ArrowRight, Activity, Leaf, Droplets, Clock, Loader2, AlertTriangle } from 'lucide-react';
 import { Disease, Remedy, Ingredient, Article } from '../types';
 import { ContentService } from '../services/contentService';
 
@@ -464,7 +465,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearchSubmit }) => {
       </div>
 
       <Link
-        to="/articles"
+        href="/articles"
         className="mt-4 md:mt-0 inline-flex items-center gap-2 text-xs font-semibold text-[#1E4D30] hover:text-[#8B6B3E] transition-colors"
       >
         <span>View All Articles</span>
@@ -476,7 +477,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearchSubmit }) => {
       {articles.slice(0, 6).map((article) => (
         <Link
           key={article.id}
-          to={`/articles/${article.slug}`}
+          href={`/articles/${article.slug}`}
           className="group flex flex-col justify-between cursor-pointer"
         >
           <div>

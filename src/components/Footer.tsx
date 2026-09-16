@@ -1,26 +1,51 @@
-import React from 'react';
-import { Leaf, ShieldCheck, ArrowUp } from 'lucide-react';
+"use client";
+
+import React from "react";
+import { Leaf, ShieldCheck, ArrowUp } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface FooterProps {
-  onNavigate: (page: string, slug?: string) => void;
+  onNavigate?: (page: string, slug?: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const router = useRouter();
+
+  const navigate = (page: string, slug?: string) => {
+    if (onNavigate) {
+      onNavigate(page, slug);
+      return;
+    }
+    const map: Record<string, string> = {
+      home: "/",
+      diseases: "/diseases",
+      "disease-detail": slug ? `/diseases/${slug}` : "/diseases",
+      remedies: "/remedies",
+      "remedy-detail": slug ? `/remedies/${slug}` : "/remedies",
+      ingredients: "/ingredients",
+      "ingredient-detail": slug ? `/ingredients/${slug}` : "/ingredients",
+      about: "/about",
+      contact: "/contact",
+      privacy: "/privacy",
+      terms: "/terms",
+    };
+    const href = map[page] || "/";
+    router.push(href);
+  };
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <footer className="bg-[#14261B] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#233f2d]">
-          
           {/* Brand Info */}
           <div className="md:col-span-4 space-y-4">
             <div
-              onClick={() => onNavigate('home')}
+              onClick={() => navigate("home")}
               className="flex items-center gap-3 cursor-pointer group"
             >
               <div className="w-9 h-9 rounded bg-[#255236] text-white flex items-center justify-center">
@@ -49,7 +74,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
               <li>
                 <button
-                  onClick={() => onNavigate('disease-detail', 'amlapitta-hyperacidity-acid-reflux')}
+                  onClick={() => navigate("disease-detail", "amlapitta-hyperacidity-acid-reflux")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Acid Reflux (Amlapitta)
@@ -57,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('disease-detail', 'sandhivata-osteoarthritis-joint-stiffness')}
+                  onClick={() => navigate("disease-detail", "sandhivata-osteoarthritis-joint-stiffness")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Joint Stiffness (Sandhivata)
@@ -65,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('disease-detail', 'kasa-pratishyaya-respiratory-congestion')}
+                  onClick={() => navigate("disease-detail", "kasa-pratishyaya-respiratory-congestion")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Respiratory Cough (Kasa)
@@ -73,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('disease-detail', 'anidra-sleep-deprivation-insomnia')}
+                  onClick={() => navigate("disease-detail", "anidra-sleep-deprivation-insomnia")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Insomnia (Anidra)
@@ -81,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('diseases')}
+                  onClick={() => navigate("diseases")}
                   className="text-[#64B584] hover:underline cursor-pointer font-medium"
                 >
                   Browse All Conditions →
@@ -98,7 +123,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
               <li>
                 <button
-                  onClick={() => onNavigate('remedy-detail', 'haldi-doodh-golden-turmeric-elixir')}
+                  onClick={() => navigate("remedy-detail", "haldi-doodh-golden-turmeric-elixir")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Golden Milk (Haldi Doodh)
@@ -106,7 +131,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('remedy-detail', 'ardraka-deepana-ginger-lemon-relish')}
+                  onClick={() => navigate("remedy-detail", "ardraka-deepana-ginger-lemon-relish")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Ginger Agni Relish (Ardraka)
@@ -114,7 +139,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('ingredient-detail', 'ashwagandha-indian-ginseng')}
+                  onClick={() => navigate("ingredient-detail", "ashwagandha-indian-ginseng")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Ashwagandha Root Profile
@@ -122,7 +147,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('ingredient-detail', 'amla-indian-gooseberry')}
+                  onClick={() => navigate("ingredient-detail", "amla-indian-gooseberry")}
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Amalaki (Indian Gooseberry)
@@ -130,7 +155,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('remedies')}
+                  onClick={() => navigate("remedies")}
                   className="text-[#64B584] hover:underline cursor-pointer font-medium"
                 >
                   Explore All Desi Nuskhe →
@@ -146,28 +171,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </h4>
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
               <li>
-                <button onClick={() => onNavigate('about')} className="hover:text-white cursor-pointer transition-colors">
+                <button onClick={() => navigate("about")} className="hover:text-white cursor-pointer transition-colors">
                   Our Editorial Board
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('contact')} className="hover:text-white cursor-pointer transition-colors">
+                <button onClick={() => navigate("contact")} className="hover:text-white cursor-pointer transition-colors">
                   Contact Editors
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('privacy')} className="hover:text-white cursor-pointer transition-colors">
+                <button onClick={() => navigate("privacy")} className="hover:text-white cursor-pointer transition-colors">
                   Privacy Policy
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('terms')} className="hover:text-white cursor-pointer transition-colors">
+                <button onClick={() => navigate("terms")} className="hover:text-white cursor-pointer transition-colors">
                   Terms of Service
                 </button>
               </li>
             </ul>
           </div>
-
         </div>
 
         {/* Medical Disclaimer Warning */}
@@ -190,7 +214,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ArrowUp size={13} />
           </button>
         </div>
-
       </div>
     </footer>
   );

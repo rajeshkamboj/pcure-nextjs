@@ -1,5 +1,6 @@
+"use client";
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   Calendar,
@@ -10,9 +11,14 @@ import {
 import { Article } from '../types';
 import { ContentService } from '../services/contentService';
 
-export const ArticleDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
+interface ArticleDetailProps {
+  slug?: string;
+}
+
+export const ArticleDetail: React.FC<ArticleDetailProps> = ({ slug: propSlug }) => {
+  const params = useParams() as { slug?: string } | null;
+  const slug = propSlug || params?.slug;
+  const router = useRouter();
 
   const [article, setArticle] = useState<Article | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +36,7 @@ export const ArticleDetail: React.FC = () => {
         setIsLoading(true);
         setError(null);
 
-        const data = await ContentService.getArticleBySlug(slug);
+        const data = await ContentService.getArticleBySlug(slug as string);
 
         if (!data) {
           setError('Article not found.');
@@ -77,7 +83,7 @@ export const ArticleDetail: React.FC = () => {
           </p>
 
           <button
-            onClick={() => navigate('/articles')}
+            onClick={() => router.push('/articles')}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#1E4D30] text-white text-sm font-semibold hover:bg-[#163a24] transition-colors cursor-pointer"
           >
             <ArrowLeft size={16} />
@@ -95,6 +101,8 @@ export const ArticleDetail: React.FC = () => {
         year: 'numeric',
       })
     : '';
+
+  const navigate = (href: string) => router.push(href);
 
   return (
     <div className="bg-[#FAF8F5] min-h-screen">

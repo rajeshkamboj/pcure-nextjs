@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { ShieldCheck, BookOpen, HeartPulse, Users } from 'lucide-react';
 import { AUTHORS } from '../data/mockData';

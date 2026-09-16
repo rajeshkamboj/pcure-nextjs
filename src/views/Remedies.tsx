@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Search, Clock, Droplets, ArrowRight, Sparkles, Loader2 } from 'lucide-react';
 import { Remedy } from '../types';

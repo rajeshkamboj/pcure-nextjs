@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, ShieldCheck, ArrowRight, Droplets, BookOpen, Loader2 } from 'lucide-react';
 import { Disease } from '../types';

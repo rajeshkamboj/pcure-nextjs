@@ -1,6 +1,8 @@
 import { Disease, Remedy, Ingredient, Article, Author } from '../types';
 
-const BASE_URL = 'http://pcure.test/wp-json/wp/v2';
+const BASE_URL =
+  (typeof process !== 'undefined' ? (process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string | undefined) : undefined) ||
+  'http://pcure.test/wp-json/wp/v2';
 
 const UNKNOWN_AUTHOR: Author = {
   id: '0',

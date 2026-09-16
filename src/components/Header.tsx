@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, Menu, X, Leaf, Sparkles, ArrowRight } from 'lucide-react';
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import { Search, Menu, X, Leaf, Sparkles, ArrowRight } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface HeaderProps {
-  currentPage: string;
-  onNavigate: (page: string, slug?: string) => void;
-  onSearchSubmit: (query: string) => void;
+  currentPage?: string;
+  onNavigate?: (page: string, slug?: string) => void;
+  onSearchSubmit?: (query: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -12,9 +16,11 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigate,
   onSearchSubmit,
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [headerSearch, setHeaderSearch] = useState('');
+  const [headerSearch, setHeaderSearch] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Close overlays + focus input when the search panel opens
@@ -29,20 +35,76 @@ export const Header: React.FC<HeaderProps> = ({
   // Escape key closes any open panel
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setSearchOpen(false);
         setMobileMenuOpen(false);
       }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setSearchOpen(false);
+  }, [pathname]);
+
+  const navigateTo = (page: string, slug?: string) => {
+    // If legacy onNavigate prop is provided, delegate to it (for incremental migration)
+    if (onNavigate) {
+      onNavigate(page, slug);
+      return;
+    }
+    const map: Record<string, string> = {
+      home: "/",
+      diseases: "/diseases",
+      "disease-detail": slug ? `/diseases/${slug}` : "/diseases",
+      remedies: "/remedies",
+      "remedy-detail": slug ? `/remedies/${slug}` : "/remedies",
+      ingredients: "/ingredients",
+      "ingredient-detail": slug ? `/ingredients/${slug}` : "/ingredients",
+      search: slug ? `/search?q=${encodeURIComponent(slug)}` : "/search",
+      about: "/about",
+      contact: "/contact",
+      privacy: "/privacy",
+      terms: "/terms",
+    };
+    const href = map[page] || "/";
+    router.push(href);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleNavigate = (href: string) => {
+    if (onNavigate) {
+      // map href to page for legacy
+      const pageMap: Record<string, string> = {
+        "/": "home",
+        "/diseases": "diseases",
+        "/remedies": "remedies",
+        "/ingredients": "ingredients",
+        "/about": "about",
+        "/contact": "contact",
+      };
+      const page = pageMap[href];
+      if (page) {
+        onNavigate(page);
+        return;
+      }
+    }
+    router.push(href);
+    setMobileMenuOpen(false);
+  };
 
   const runSearch = (term: string) => {
     const q = term.trim();
     if (!q) return;
-    onSearchSubmit(q);
-    setHeaderSearch('');
+    if (onSearchSubmit) {
+      onSearchSubmit(q);
+    } else {
+      router.push(`/search?q=${encodeURIComponent(q)}`);
+    }
+    setHeaderSearch("");
     setSearchOpen(false);
     setMobileMenuOpen(false);
   };
@@ -52,31 +114,47 @@ export const Header: React.FC<HeaderProps> = ({
     runSearch(headerSearch);
   };
 
-  // Shorter, balanced labels so the nav row never wraps
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'diseases', label: 'Diseases' },
-    { id: 'remedies', label: 'Desi Nuskhe' },
-    { id: 'ingredients', label: 'Herbs' },
-    { id: 'about', label: 'About' },
-    { id: 'contact', label: 'Contact' },
+    { id: "home", label: "Home", href: "/" },
+    { id: "diseases", label: "Diseases", href: "/diseases" },
+    { id: "remedies", label: "Desi Nuskhe", href: "/remedies" },
+    { id: "ingredients", label: "Herbs", href: "/ingredients" },
+    { id: "about", label: "About", href: "/about" },
+    { id: "contact", label: "Contact", href: "/contact" },
   ];
 
   const popularSearches = [
-    'Acidity',
-    'Joint Pain',
-    'Dry Cough',
-    'Insomnia',
-    'Ashwagandha',
-    'Turmeric',
+    "Acidity",
+    "Joint Pain",
+    "Dry Cough",
+    "Insomnia",
+    "Ashwagandha",
+    "Turmeric",
   ];
 
+  const getCurrentPageFromPath = (path: string) => {
+    if (path === "/" || path === "") return "home";
+    if (path === "/diseases") return "diseases";
+    if (path.startsWith("/diseases/")) return "disease-detail";
+    if (path === "/remedies") return "remedies";
+    if (path.startsWith("/remedies/")) return "remedy-detail";
+    if (path === "/ingredients") return "ingredients";
+    if (path.startsWith("/ingredients/")) return "ingredient-detail";
+    if (path.startsWith("/search")) return "search";
+    if (path === "/about") return "about";
+    if (path === "/contact") return "contact";
+    if (path === "/privacy") return "privacy";
+    if (path === "/terms") return "terms";
+    return "home";
+  };
+
+  const effectiveCurrentPage = currentPage || getCurrentPageFromPath(pathname || "/");
+
   const isNavActive = (id: string) =>
-    currentPage === id ||
-    (id === 'diseases' && currentPage === 'disease-detail') ||
-    (id === 'remedies' && currentPage === 'remedy-detail') ||
-    (id === 'ingredients' && currentPage === 'ingredient-detail') ||
-    (id === 'contact' && currentPage === 'search' && false);
+    effectiveCurrentPage === id ||
+    (id === "diseases" && effectiveCurrentPage === "disease-detail") ||
+    (id === "remedies" && effectiveCurrentPage === "remedy-detail") ||
+    (id === "ingredients" && effectiveCurrentPage === "ingredient-detail");
 
   return (
     <header className="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E2DBD0]">
@@ -90,10 +168,9 @@ export const Header: React.FC<HeaderProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between gap-3 h-16 lg:h-[70px]">
-          
           {/* Logo Brand */}
           <div
-            onClick={() => onNavigate('home')}
+            onClick={() => handleNavigate("/")}
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
             <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#1E4D30] text-[#EAF2ED] flex items-center justify-center shadow-xs group-hover:bg-[#163a24] transition-colors">
@@ -117,12 +194,12 @@ export const Header: React.FC<HeaderProps> = ({
             {navLinks.map((link) => (
               <button
                 key={link.id}
-                onClick={() => onNavigate(link.id)}
-                aria-current={isNavActive(link.id) ? 'page' : undefined}
+                onClick={() => handleNavigate(link.href)}
+                aria-current={isNavActive(link.id) ? "page" : undefined}
                 className={`whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-md cursor-pointer transition-colors ${
                   isNavActive(link.id)
-                    ? 'text-[#1E4D30] bg-[#E8EFEA] font-semibold'
-                    : 'hover:text-[#1E4D30] hover:bg-[#F2ECE1]'
+                    ? "text-[#1E4D30] bg-[#E8EFEA] font-semibold"
+                    : "hover:text-[#1E4D30] hover:bg-[#F2ECE1]"
                 }`}
               >
                 {link.label}
@@ -138,8 +215,8 @@ export const Header: React.FC<HeaderProps> = ({
               aria-label="Open search"
               className={`hidden sm:flex items-center gap-2 pl-2.5 pr-3 py-2 rounded-lg border text-xs transition-colors cursor-pointer ${
                 searchOpen
-                  ? 'bg-white border-[#1E4D30] text-[#1E4D30]'
-                  : 'bg-[#F3EFE7] border-[#d8cfbe] text-[#4a5a4e] hover:border-[#1E4D30] hover:bg-white'
+                  ? "bg-white border-[#1E4D30] text-[#1E4D30]"
+                  : "bg-[#F3EFE7] border-[#d8cfbe] text-[#4a5a4e] hover:border-[#1E4D30] hover:bg-white"
               }`}
             >
               <Search size={15} />
@@ -147,7 +224,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <button
-              onClick={() => onNavigate('contact')}
+              onClick={() => handleNavigate("/contact")}
               className="hidden md:block bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap"
             >
               Consult Desk
@@ -181,11 +258,11 @@ export const Header: React.FC<HeaderProps> = ({
           {navLinks.map((link) => (
             <button
               key={link.id}
-              onClick={() => onNavigate(link.id)}
+              onClick={() => handleNavigate(link.href)}
               className={`whitespace-nowrap px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                 isNavActive(link.id)
-                  ? 'text-[#1E4D30] bg-[#E8EFEA] font-semibold'
-                  : 'text-[#2d3a30] hover:bg-[#F2ECE1]'
+                  ? "text-[#1E4D30] bg-[#E8EFEA] font-semibold"
+                  : "text-[#2d3a30] hover:bg-[#F2ECE1]"
               }`}
             >
               {link.label}
@@ -258,13 +335,13 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 key={link.id}
                 onClick={() => {
-                  onNavigate(link.id);
+                  handleNavigate(link.href);
                   setMobileMenuOpen(false);
                 }}
                 className={`w-full text-left px-3 py-2.5 rounded-md text-sm font-medium ${
                   isNavActive(link.id)
-                    ? 'text-[#1E4D30] bg-[#E8EFEA] font-semibold'
-                    : 'text-[#2d3a30] hover:bg-[#F2ECE1]'
+                    ? "text-[#1E4D30] bg-[#E8EFEA] font-semibold"
+                    : "text-[#2d3a30] hover:bg-[#F2ECE1]"
                 }`}
               >
                 {link.label}
@@ -272,7 +349,7 @@ export const Header: React.FC<HeaderProps> = ({
             ))}
             <button
               onClick={() => {
-                onNavigate('contact');
+                handleNavigate("/contact");
                 setMobileMenuOpen(false);
               }}
               className="w-full text-center py-2.5 mt-1 bg-[#1E4D30] text-white text-xs font-semibold rounded-lg cursor-pointer"

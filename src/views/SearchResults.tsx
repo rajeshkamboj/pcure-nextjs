@@ -1,5 +1,6 @@
+"use client";
 import React, { useState, useEffect } from 'react';
-import { Search, BookOpen, Sparkles, Leaf, ArrowRight, Loader2 } from 'lucide-react';
+import { Search, BookOpen, Sparkles, Leaf, ArrowRight, Loader2, AlertTriangle } from 'lucide-react';
 import { ContentService } from '../services/contentService';
 import { Disease, Remedy, Ingredient, Article } from '../types';
 
@@ -123,7 +124,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 filterType === 'diseases' ? 'bg-[#1E4D30] text-white font-medium' : 'bg-white border border-[#ded5c5] text-[#3f5043] hover:bg-[#f3ede1]'
               }`}
             >
-              Diseases ({results?.diseases.length || 0})
+              Diseases ({results?.diseases?.length ?? 0})
             </button>
             <button
               onClick={() => setFilterType('remedies')}
@@ -131,7 +132,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 filterType === 'remedies' ? 'bg-[#1E4D30] text-white font-medium' : 'bg-white border border-[#ded5c5] text-[#3f5043] hover:bg-[#f3ede1]'
               }`}
             >
-              Desi Nuskhe ({results?.remedies.length || 0})
+              Desi Nuskhe ({results?.remedies?.length ?? 0})
             </button>
             <button
               onClick={() => setFilterType('ingredients')}
@@ -139,7 +140,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                 filterType === 'ingredients' ? 'bg-[#1E4D30] text-white font-medium' : 'bg-white border border-[#ded5c5] text-[#3f5043] hover:bg-[#f3ede1]'
               }`}
             >
-              Herbs & Spices ({results?.ingredients.length || 0})
+              Herbs & Spices ({results?.ingredients?.length ?? 0})
             </button>
           </div>
         </div>
@@ -163,16 +164,16 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
           <div className="space-y-8">
 
             {/* Diseases Matches */}
-            {(filterType === 'all' || filterType === 'diseases') && results?.diseases.length > 0 && (
+            {(filterType === 'all' || filterType === 'diseases') && (results?.diseases?.length ?? 0) > 0 && (
               <div>
                 <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#eee6da]">
                   <BookOpen size={16} className="text-[#1E4D30]" />
                   <h2 className="font-editorial font-bold text-lg text-[#16271b]">
-                    Disease & Pathological Guides ({results.diseases.length})
+                    Disease & Pathological Guides ({results!.diseases.length})
                   </h2>
                 </div>
                 <div className="space-y-3">
-                  {results.diseases.map((d) => (
+                  {results!.diseases.map((d) => (
                     <div
                       key={d.id}
                       onClick={() => onNavigate('disease-detail', d.slug)}
@@ -194,16 +195,16 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             )}
 
             {/* Remedies Matches */}
-            {(filterType === 'all' || filterType === 'remedies') && results?.remedies.length > 0 && (
+            {(filterType === 'all' || filterType === 'remedies') && (results?.remedies?.length ?? 0) > 0 && (
               <div>
                 <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#eee6da]">
                   <Sparkles size={16} className="text-[#8B6B3E]" />
                   <h2 className="font-editorial font-bold text-lg text-[#16271b]">
-                    Desi Nuskhe & Formulations ({results.remedies.length})
+                    Desi Nuskhe & Formulations ({results!.remedies.length})
                   </h2>
                 </div>
                 <div className="space-y-3">
-                  {results.remedies.map((r) => (
+                  {results!.remedies.map((r) => (
                     <div
                       key={r.id}
                       onClick={() => onNavigate('remedy-detail', r.slug)}
@@ -226,16 +227,16 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
             )}
 
             {/* Ingredients Matches */}
-            {(filterType === 'all' || filterType === 'ingredients') && results?.ingredients.length > 0 && (
+            {(filterType === 'all' || filterType === 'ingredients') && (results?.ingredients?.length ?? 0) > 0 && (
               <div>
                 <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#eee6da]">
                   <Leaf size={16} className="text-[#1E4D30]" />
                   <h2 className="font-editorial font-bold text-lg text-[#16271b]">
-                    Medicinal Herbs & Materia Medica ({results.ingredients.length})
+                    Medicinal Herbs & Materia Medica ({results!.ingredients.length})
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {results.ingredients.map((i) => (
+                  {results!.ingredients.map((i) => (
                     <div
                       key={i.id}
                       onClick={() => onNavigate('ingredient-detail', i.slug)}
