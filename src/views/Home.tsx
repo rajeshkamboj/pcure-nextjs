@@ -551,7 +551,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearchSubmit }) => {
                 Our Editorial & Medical Integrity Commitment
               </h3>
               <p className="text-xs sm:text-sm text-[#4e5c51] leading-relaxed">
-                PatientScure bridges the timeless wisdom of classical Brihat Trayi Samhitas with modern botanical pharmacology. Every home remedy, ingredient dosage, and symptom overview is rigorously validated by qualified Ayurvedic physicians (BAMS / MD Ayurveda) before publication.
+                PatientsCure bridges the timeless wisdom of classical Brihat Trayi Samhitas with modern botanical pharmacology. Every home remedy, ingredient dosage, and symptom overview is rigorously validated by qualified Ayurvedic physicians (BAMS / MD Ayurveda) before publication.
               </p>
             </div>
             <button

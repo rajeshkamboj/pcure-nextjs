@@ -25,7 +25,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) 
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
-
+  const [relatedDiseaseSlug, setRelatedDiseaseSlug] = useState<string | null>(null);
   useEffect(() => {
     async function loadData() {
       if (!slug) {
@@ -45,6 +45,10 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) 
         }
 
         setRemedy(remedyData);
+        if (remedyData.diseaseId) {
+  const [relatedDisease] = await ContentService.getDiseasesByIds([remedyData.diseaseId]);
+  setRelatedDiseaseSlug(relatedDisease?.slug ?? null);
+}
       } catch (err) {
         console.error('Error loading remedy detail:', err);
         setError('Failed to load remedy data. Please try again later.');
@@ -334,23 +338,23 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) 
               </div>
 
               {/* Related Disease Link If Available */}
-              {remedy.diseaseId && (
-                <div className="p-5 rounded-xl border border-[#ded5c5] bg-[#F4EFE5] flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-[#8B6B3E]">Related Pathological Guide</div>
-                    <h4 className="font-editorial font-bold text-base text-[#192b1e]">
-                      Want to understand the root pathology of this ailment?
-                    </h4>
-                  </div>
-                  <button
-                    onClick={() => onNavigate('disease-detail', remedy.diseaseId)}
-                    className="shrink-0 px-4 py-2 rounded bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
-                  >
-                    <span>Read Disease Guide</span>
-                    <ArrowRight size={13} />
-                  </button>
-                </div>
-              )}
+              {relatedDiseaseSlug && (
+  <div className="p-5 rounded-xl border border-[#ded5c5] bg-[#F4EFE5] flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div>
+      <div className="text-xs font-semibold uppercase tracking-wider text-[#8B6B3E]">Related Pathological Guide</div>
+      <h4 className="font-editorial font-bold text-base text-[#192b1e]">
+        Want to understand the root pathology of this ailment?
+      </h4>
+    </div>
+    <button
+      onClick={() => onNavigate('disease-detail', relatedDiseaseSlug)}
+      className="shrink-0 px-4 py-2 rounded bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
+    >
+      <span>Read Disease Guide</span>
+      <ArrowRight size={13} />
+    </button>
+  </div>
+)}
 
             </div>
           </div>

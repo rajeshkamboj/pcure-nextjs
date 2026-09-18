@@ -461,7 +461,13 @@ export default function HomePage() {
                 className="group bg-white rounded-lg border border-[#e5dfd3] p-3.5 hover:border-[#1E4D30] hover:shadow-sm transition-all cursor-pointer text-center flex flex-col items-center"
               >
                 <div className="w-16 h-16 rounded-full overflow-hidden mb-3 border border-[#ded5c5]">
-                  <img src={herb.featuredImage} alt={herb.commonName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                  {herb.featuredImage ? (
+                    <img src={herb.featuredImage} alt={herb.commonName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                  ) : (
+                    <div className="w-full h-full bg-[#f0ebe1] flex items-center justify-center text-[#8B6B3E]">
+                      <Leaf size={20} />
+                    </div>
+                  )}
                 </div>
                 <h4 className="font-editorial font-bold text-sm text-[#182a1d] group-hover:text-[#1E4D30] transition-colors leading-tight">
                   {herb.commonName}
@@ -523,7 +529,13 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-2.5 pt-3 border-t border-[#f0ebd5]">
-                  <img src={article.author.avatarUrl} alt={article.author.name} className="w-7 h-7 rounded-full object-cover" />
+                    {article.author.avatarUrl ? (
+                      <img src={article.author.avatarUrl} alt={article.author.name} className="w-7 h-7 rounded-full object-cover" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center shrink-0">
+                        <span className="text-[10px] font-bold">{article.author.name.charAt(0)}</span>
+                      </div>
+                    )}
 
                   <div className="text-xs">
                     <div className="font-semibold text-[#1e2e21]">{article.author.name}</div>
@@ -557,7 +569,7 @@ export default function HomePage() {
                 Our Editorial & Medical Integrity Commitment
               </h3>
               <p className="text-xs sm:text-sm text-[#4e5c51] leading-relaxed">
-                PatientScure bridges the timeless wisdom of classical Brihat Trayi Samhitas with modern botanical pharmacology. Every home remedy, ingredient dosage, and symptom overview is rigorously validated by qualified Ayurvedic physicians (BAMS / MD Ayurveda) before publication.
+                Patientscure bridges the timeless wisdom of classical Brihat Trayi Samhitas with modern botanical pharmacology. Every home remedy, ingredient dosage, and symptom overview is rigorously validated by qualified Ayurvedic physicians (BAMS / MD Ayurveda) before publication.
               </p>
             </div>
             <button

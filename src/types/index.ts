@@ -8,6 +8,30 @@ export interface Author {
   avatarUrl: string;
 }
 
+/** The subset of Yoast's REST response used for Next.js metadata. */
+export interface YoastSeo {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  og_title?: string;
+  og_description?: string;
+  og_url?: string;
+  og_site_name?: string;
+  og_type?: string;
+  og_image?: Array<{ url?: string }>;
+  twitter_card?: string;
+  twitter_title?: string;
+  twitter_description?: string;
+  twitter_image?: string;
+  robots?: {
+    index?: string;
+    follow?: string;
+    'max-snippet'?: string;
+    'max-image-preview'?: string;
+    'max-video-preview'?: string;
+  };
+}
+
 export interface Disease {
   id: string;
   slug: string;
@@ -51,6 +75,7 @@ export interface Disease {
     year?: string;
   }[];
   featured?: boolean;
+  seo?: YoastSeo;
 }
 
 export interface Remedy {
@@ -85,6 +110,7 @@ export interface Remedy {
   verifiedBy: Author;
   tags: string[];
   featured?: boolean;
+  seo?: YoastSeo;
 }
 
 export interface Ingredient {
@@ -115,6 +141,7 @@ export interface Ingredient {
   safetyAndContraindications: string[];
   featuredRemediesIds: string[];
   associatedDiseasesIds: string[];
+  seo?: YoastSeo;
 }
 
 export interface Article {
@@ -129,4 +156,5 @@ export interface Article {
   readTime: string;
   author: Author;
   tags: string[];
+  seo?: YoastSeo;
 }

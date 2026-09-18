@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Search, Menu, X, Leaf, Sparkles, ArrowRight } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 interface HeaderProps {
   currentPage?: string;
@@ -169,22 +170,19 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between gap-3 h-16 lg:h-[70px]">
           {/* Logo Brand */}
-          <div
-            onClick={() => handleNavigate("/")}
-            className="flex items-center gap-2.5 cursor-pointer group shrink-0"
-          >
-            <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#1E4D30] text-[#EAF2ED] flex items-center justify-center shadow-xs group-hover:bg-[#163a24] transition-colors">
-              <Leaf size={20} className="group-hover:rotate-6 transition-transform" />
+            <div
+              onClick={() => handleNavigate("/")}
+              className="flex items-center gap-2.5 cursor-pointer group shrink-0"
+            >
+              <Image
+                src="/images/logo.webp"
+                alt="PatientsCure"
+                width={420}
+                height={120}
+                priority
+                className="h-auto w-[180px] lg:w-[210px]"
+              />
             </div>
-            <div className="leading-none">
-              <div className="font-editorial text-xl lg:text-2xl font-bold tracking-tight text-[#14261B] whitespace-nowrap">
-                Patient<span className="text-[#1E4D30]">Scure</span>
-              </div>
-              <p className="hidden sm:block text-[9px] lg:text-[10px] uppercase tracking-widest text-[#8B6B3E] font-semibold mt-0.5 whitespace-nowrap">
-                Ayurvedic Health Library
-              </p>
-            </div>
-          </div>
 
           {/* Desktop Navigation Links — single row, no wrapping */}
           <nav

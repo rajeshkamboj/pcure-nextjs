@@ -1,13 +1,17 @@
-"use client";
+import type { Metadata } from 'next';
+import ArticleDetailClient from './page.client';
+import { ContentService } from '@/services/contentService';
+import { yoastMetadata } from '@/lib/yoastMetadata';
 
-import { use } from "react";
-import { ArticleDetail } from "@/views/ArticleDetail";
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  return yoastMetadata((await ContentService.getArticleBySlug(slug))?.seo);
+}
 
 export default function ArticleDetailRoute({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = use(params);
-  return <ArticleDetail slug={slug} />;
+  return <ArticleDetailClient params={params} />;
 }

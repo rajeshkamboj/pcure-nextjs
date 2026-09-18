@@ -184,11 +184,17 @@ export const Ingredients: React.FC<IngredientsProps> = ({ onNavigate }) => {
             >
               <div>
                 <div className="h-44 overflow-hidden relative border-b border-[#eee7da]">
-                  <img
-                    src={herb.featuredImage}
-                    alt={herb.commonName}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  {herb.featuredImage ? (
+                    <img
+                      src={herb.featuredImage}
+                      alt={herb.commonName}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#f0ebe1] flex items-center justify-center text-[#8B6B3E]">
+                      <Leaf size={32} />
+                    </div>
+                  )}
                   <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded text-xs font-semibold text-[#1E4D30]">
                     {herb.sanskritName} ({herb.hindiName})
                   </div>

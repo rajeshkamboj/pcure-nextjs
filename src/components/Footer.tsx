@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Leaf, ShieldCheck, ArrowUp } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Leaf, ShieldCheck, ArrowUp } from "lucide-react";
 
 interface FooterProps {
   onNavigate?: (page: string, slug?: string) => void;
@@ -48,12 +49,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               onClick={() => navigate("home")}
               className="flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-9 h-9 rounded bg-[#255236] text-white flex items-center justify-center">
-                <Leaf size={20} />
-              </div>
-              <span className="font-editorial text-2xl font-bold tracking-tight text-white">
-                Patient<span className="text-[#64B584]">Scure</span>
-              </span>
+              <Image
+                src="/images/logo.webp"
+                alt="PatientsCure"
+                width={420}
+                height={120}
+                className="h-auto w-[160px] brightness-0 invert"
+              />
             </div>
 
             <p className="text-xs text-[#a2b5a6] leading-relaxed max-w-sm">
@@ -197,13 +199,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Medical Disclaimer Warning */}
         <div className="py-6 border-b border-[#233f2d] text-[11px] text-[#93a697] leading-relaxed">
           <strong className="text-[#b9ccc0] uppercase font-bold">Medical Disclaimer: </strong>
-          PatientScure provides evidence-informed classical Ayurvedic health information for educational purposes only. The articles, desi nuskhe formulations, and botanical profiles are not intended to substitute professional medical diagnosis, clinical consultation, or emergency care. Never disregard qualified medical advice or delay seeking care because of something you read on this website.
+          PatientsCure provides evidence-informed classical Ayurvedic health information for educational purposes only. The articles, desi nuskhe formulations, and botanical profiles are not intended to substitute professional medical diagnosis, clinical consultation, or emergency care. Never disregard qualified medical advice or delay seeking care because of something you read on this website.
         </div>
 
         {/* Bottom Sub-footer */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#879b8c] gap-4">
           <div>
-            © {new Date().getFullYear()} PatientScure Health Publication. All rights reserved. Classical Samhita texts revered.
+            © {new Date().getFullYear()} PatientsCure Health Publication. All rights reserved. Classical Samhita texts revered.
           </div>
 
           <button

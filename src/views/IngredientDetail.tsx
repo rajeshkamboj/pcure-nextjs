@@ -121,11 +121,17 @@ setRelatedDiseases(diseases);
           <div className="grid grid-cols-1 md:grid-cols-12">
 
             <div className="md:col-span-5 h-72 md:h-auto relative">
-              <img
-                src={ingredient.featuredImage}
-                alt={ingredient.commonName}
-                className="w-full h-full object-cover"
-              />
+              {ingredient.featuredImage ? (
+                <img
+                  src={ingredient.featuredImage}
+                  alt={ingredient.commonName}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-[#f0ebe1] flex items-center justify-center text-[#8B6B3E]">
+                  <Leaf size={48} />
+                </div>
+              )}
               <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-3 py-1 rounded text-xs font-semibold text-[#1E4D30]">
                 {ingredient.sanskritName} ({ingredient.hindiName})
               </div>

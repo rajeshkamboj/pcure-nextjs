@@ -1,4 +1,4 @@
-import { Disease, Remedy, Ingredient, Article, Author } from '../types';
+import { Disease, Remedy, Ingredient, Article, Author, YoastSeo } from '../types';
 
 const BASE_URL =
   (typeof process !== 'undefined' ? (process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string | undefined) : undefined) ||
@@ -32,6 +32,7 @@ type WPPost = {
   };
   acf?: Record<string, any> | null;
   _embedded?: Record<string, any>;
+  yoast_head_json?: YoastSeo;
 };
 
 export interface PaginatedArticles {
@@ -92,6 +93,11 @@ const asString = (value: any, fallback = ''): string => {
   }
 
   return fallback;
+};
+
+const getYoastSeo = (post: WPPost): YoastSeo | undefined => {
+  const seo = post.yoast_head_json;
+  return seo && typeof seo === 'object' ? seo : undefined;
 };
 
 /**
@@ -514,6 +520,7 @@ const normalizeDisease = async (
       : [],
 
     featured: Boolean(acf.featured),
+    seo: getYoastSeo(wpDisease),
   };
 };
 
@@ -606,13 +613,13 @@ const normalizeRemedy = async (
       ['step', 'value']
     ),
 
-    howToUse: {
-      dosage: asString(acf.how_to_use?.dosage),
-      timing: asString(acf.how_to_use?.timing),
-      frequency: asString(acf.how_to_use?.frequency),
-      anupana: asString(acf.how_to_use?.anupana),
-      duration: asString(acf.how_to_use?.duration),
-    },
+howToUse: {
+  dosage: asString(acf.dosage),
+  timing: asString(acf.timing),
+  frequency: asString(acf.frequency),
+  anupana: asString(acf.anupana),
+  duration: asString(acf.duration),
+},
 
     precautions: repeaterToStrings(
       acf.precautions,
@@ -639,6 +646,7 @@ const normalizeRemedy = async (
     ),
 
     featured: Boolean(acf.featured),
+    seo: getYoastSeo(wpRemedy),
   };
 };
 
@@ -743,6 +751,7 @@ const normalizeIngredient = (
     associatedDiseasesIds: toIdArray(
       acf.associated_diseases
     ),
+    seo: getYoastSeo(wpIngredient),
   };
 };
 
@@ -807,6 +816,7 @@ const normalizeArticle = async (
       acf.tags,
       ['tag', 'value']
     ),
+    seo: getYoastSeo(wpArticle),
   };
 };
 

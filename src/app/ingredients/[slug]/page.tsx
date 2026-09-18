@@ -1,29 +1,17 @@
-"use client";
+import type { Metadata } from 'next';
+import IngredientDetailClient from './page.client';
+import { ContentService } from '@/services/contentService';
+import { yoastMetadata } from '@/lib/yoastMetadata';
 
-import { useRouter } from "next/navigation";
-import { use } from "react";
-import { IngredientDetail } from "@/views/IngredientDetail";
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  return yoastMetadata((await ContentService.getIngredientBySlug(slug))?.seo);
+}
 
 export default function IngredientDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = use(params);
-  const router = useRouter();
-  const onNavigate = (page: string, s?: string) => {
-    const map: Record<string, string> = {
-      home: "/",
-      diseases: "/diseases",
-      "disease-detail": s ? `/diseases/${s}` : "/diseases",
-      remedies: "/remedies",
-      "remedy-detail": s ? `/remedies/${s}` : "/remedies",
-      ingredients: "/ingredients",
-      "ingredient-detail": s ? `/ingredients/${s}` : "/ingredients",
-      about: "/about",
-      contact: "/contact",
-    };
-    router.push(map[page] || "/");
-  };
-  return <IngredientDetail slug={slug} onNavigate={onNavigate} />;
+  return <IngredientDetailClient params={params} />;
 }

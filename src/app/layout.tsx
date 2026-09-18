@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "PatientScure — Ayurvedic Health Information, Home Remedies & Classical Herbal Care",
+  title: "PatientsCure — Ayurvedic Health Information, Home Remedies & Classical Herbal Care",
   description:
     "Evidence-informed Ayurvedic health publication, comprehensive disease guides, authentic desi nuskhe home remedies, and medicinal herb encyclopedia.",
 };
