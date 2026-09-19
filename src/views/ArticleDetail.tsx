@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Article } from '../types';
 import { ContentService } from '../services/contentService';
+import AdSense from "@/components/ads/AdSense";
 
 interface ArticleDetailProps {
   slug?: string;
@@ -180,6 +181,11 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ slug: propSlug }) 
           </div>
         </section>
       )}
+
+      <AdSense
+  slot="6527255563"
+  className="max-w-5xl mx-auto px-4 sm:px-6 py-6"
+/>
 
       {/* Article Content */}
       <article className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
