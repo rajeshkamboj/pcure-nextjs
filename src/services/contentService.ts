@@ -1,8 +1,11 @@
 import { Disease, Remedy, Ingredient, Article, Author, YoastSeo } from '../types';
+import { REVALIDATE, CACHE_TAGS, getCacheOptions } from '@/lib/cache';
 
 const BASE_URL =
-  (typeof process !== 'undefined' ? (process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string | undefined) : undefined) ||
-  'http://pcure.test/wp-json/wp/v2';
+  (typeof process !== 'undefined'
+    ? ((process.env.WORDPRESS_API_URL as string | undefined) ||
+        (process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string | undefined))
+    : undefined) || 'http://pcure.test/wp-json/wp/v2';
 
 const UNKNOWN_AUTHOR: Author = {
   id: '0',
@@ -269,7 +272,8 @@ const fetchAuthor = async (
 
   const request = (async () => {
     try {
-      const res = await fetch(`${BASE_URL}/authors/${encodeURIComponent(id)}?_embed`);
+      const cacheOpts = getCacheOptions(REVALIDATE.authors, [CACHE_TAGS.authors]);
+      const res = await fetch(`${BASE_URL}/authors/${encodeURIComponent(id)}?_embed`, cacheOpts as RequestInit);
 
       if (!res.ok) {
         console.warn(`Unable to fetch author ${id}: ${res.status}`);
@@ -320,8 +324,13 @@ const buildUrl = (
   return `${BASE_URL}/${endpoint}${query ? `?${query}` : ''}`;
 };
 
-const fetchJson = async <T = any>(url: string): Promise<T> => {
-  const res = await fetch(url);
+const fetchJson = async <T = any>(
+  url: string,
+  revalidate?: number,
+  tags?: string[]
+): Promise<T> => {
+  const cacheOpts = revalidate ? getCacheOptions(revalidate, tags) : undefined;
+  const res = await fetch(url, cacheOpts as RequestInit);
 
   if (!res.ok) {
     throw new Error(
@@ -338,7 +347,9 @@ const fetchJson = async <T = any>(url: string): Promise<T> => {
  */
 const fetchAllPages = async <T = any>(
   endpoint: string,
-  params: Record<string, string | number | boolean | undefined> = {}
+  params: Record<string, string | number | boolean | undefined> = {},
+  revalidate?: number,
+  tags?: string[]
 ): Promise<T[]> => {
   const results: T[] = [];
   let page = 1;
@@ -349,7 +360,9 @@ const fetchAllPages = async <T = any>(
         ...params,
         page,
         per_page: 100,
-      })
+      }),
+      revalidate,
+      tags
     );
 
     results.push(...data);
@@ -547,7 +560,9 @@ const normalizeRemedy = async (
               const ingredient = await fetchJson<WPPost>(
                 buildUrl(`ingredients/${encodeURIComponent(ingredientId)}`, {
                   _embed: true,
-                })
+                }),
+                REVALIDATE.ingredients,
+                [CACHE_TAGS.ingredients]
               );
 
               ingredientName =
@@ -911,7 +926,9 @@ export const ContentService = {
         'diseases',
         {
           _embed: true,
-        }
+        },
+        REVALIDATE.diseases,
+        [CACHE_TAGS.diseases]
       );
 
       return Promise.all(
@@ -934,7 +951,9 @@ export const ContentService = {
         buildUrl('diseases', {
           slug,
           _embed: true,
-        })
+        }),
+        REVALIDATE.diseases,
+        [CACHE_TAGS.diseases]
       );
 
       return data[0]
@@ -972,7 +991,9 @@ export const ContentService = {
         'remedies',
         {
           _embed: true,
-        }
+        },
+        REVALIDATE.remedies,
+        [CACHE_TAGS.remedies]
       );
 
       return Promise.all(
@@ -995,7 +1016,9 @@ export const ContentService = {
         buildUrl('remedies', {
           slug,
           _embed: true,
-        })
+        }),
+        REVALIDATE.remedies,
+        [CACHE_TAGS.remedies]
       );
 
       return data[0]
@@ -1035,7 +1058,9 @@ export const ContentService = {
         'ingredients',
         {
           _embed: true,
-        }
+        },
+        REVALIDATE.ingredients,
+        [CACHE_TAGS.ingredients]
       );
 
       return data.map(normalizeIngredient);
@@ -1056,7 +1081,9 @@ export const ContentService = {
         buildUrl('ingredients', {
           slug,
           _embed: true,
-        })
+        }),
+        REVALIDATE.ingredients,
+        [CACHE_TAGS.ingredients]
       );
 
       return data[0]
@@ -1100,7 +1127,9 @@ export const ContentService = {
           include: cleanIds.join(','),
           _embed: true,
           per_page: 100,
-        })
+        }),
+        REVALIDATE.ingredients,
+        [CACHE_TAGS.ingredients]
       );
 
       /*
@@ -1163,7 +1192,9 @@ export const ContentService = {
           include: cleanIds.join(','),
           _embed: true,
           per_page: 100,
-        })
+        }),
+        REVALIDATE.remedies,
+        [CACHE_TAGS.remedies]
       );
 
       const normalized =
@@ -1217,7 +1248,9 @@ export const ContentService = {
           include: cleanIds.join(','),
           _embed: true,
           per_page: 100,
-        })
+        }),
+        REVALIDATE.diseases,
+        [CACHE_TAGS.diseases]
       );
 
       const normalized =
@@ -1250,7 +1283,9 @@ export const ContentService = {
         'articles',
         {
           _embed: true,
-        }
+        },
+        REVALIDATE.articles,
+        [CACHE_TAGS.articles]
       );
 
       return Promise.all(
@@ -1272,7 +1307,8 @@ export const ContentService = {
       _embed: true,
     });
 
-    const response = await fetch(url);
+    const cacheOpts = getCacheOptions(REVALIDATE.articleList, [CACHE_TAGS.articles]);
+    const response = await fetch(url, cacheOpts as RequestInit);
 
     if (response.status === 400) {
       return {
@@ -1317,7 +1353,9 @@ export const ContentService = {
         buildUrl('articles', {
           slug,
           _embed: true,
-        })
+        }),
+        REVALIDATE.articles,
+        [CACHE_TAGS.articles]
       );
 
       return data[0]
@@ -1365,7 +1403,9 @@ export const ContentService = {
               search,
               _embed: true,
               per_page: 100,
-            })
+            }),
+            REVALIDATE.search,
+            [CACHE_TAGS.search]
           ),
 
           fetchJson<WPPost[]>(
@@ -1373,7 +1413,9 @@ export const ContentService = {
               search,
               _embed: true,
               per_page: 100,
-            })
+            }),
+            REVALIDATE.search,
+            [CACHE_TAGS.search]
           ),
 
           fetchJson<WPPost[]>(
@@ -1381,7 +1423,9 @@ export const ContentService = {
               search,
               _embed: true,
               per_page: 100,
-            })
+            }),
+            REVALIDATE.search,
+            [CACHE_TAGS.search]
           ),
 
           /*
@@ -1392,7 +1436,9 @@ export const ContentService = {
               search,
               _embed: true,
               per_page: 100,
-            })
+            }),
+            REVALIDATE.search,
+            [CACHE_TAGS.search]
           ),
         ]);
 

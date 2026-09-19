@@ -1,10 +1,6 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
-  Search,
   Sparkles,
   BookOpen,
   ShieldCheck,
@@ -13,107 +9,39 @@ import {
   Leaf,
   Droplets,
   Clock,
-  Loader2,
-  AlertTriangle,
 } from "lucide-react";
-import { Disease, Remedy, Ingredient, Article } from "@/types";
 import { ContentService } from "@/services/contentService";
+import { HomeHeroSearch } from "@/components/HomeHeroSearch";
+import { DISEASES, REMEDIES, INGREDIENTS, ARTICLES } from "@/data/mockData";
 
-export default function HomePage() {
-  const router = useRouter();
-  const [searchInput, setSearchInput] = useState("");
-  const [featuredDiseases, setFeaturedDiseases] = useState<Disease[]>([]);
-  const [featuredRemedies, setFeaturedRemedies] = useState<Remedy[]>([]);
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const revalidate = 300;
 
-  useEffect(() => {
-    async function loadHomeData() {
-      try {
-        setIsLoading(true);
-        const [diseases, remedies, herbs, posts] = await Promise.all([
-          ContentService.getFeaturedDiseases(),
-          ContentService.getFeaturedRemedies(),
-          ContentService.getAllIngredients(),
-          ContentService.getAllArticles(),
-        ]);
-        setFeaturedDiseases(diseases);
-        setFeaturedRemedies(remedies);
-        setIngredients(herbs);
-        setArticles(posts);
-      } catch (err) {
-        console.error("Error loading home data:", err);
-        setError("Failed to load content. Please refresh the page.");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    loadHomeData();
-  }, []);
-
-  const onNavigate = (page: string, slug?: string) => {
-    const map: Record<string, string> = {
-      home: "/",
-      diseases: "/diseases",
-      "disease-detail": slug ? `/diseases/${slug}` : "/diseases",
-      remedies: "/remedies",
-      "remedy-detail": slug ? `/remedies/${slug}` : "/remedies",
-      ingredients: "/ingredients",
-      "ingredient-detail": slug ? `/ingredients/${slug}` : "/ingredients",
-      about: "/about",
+async function getHomeData() {
+  try {
+    const [diseases, remedies, herbs, posts] = await Promise.all([
+      ContentService.getFeaturedDiseases().catch(() => []),
+      ContentService.getFeaturedRemedies().catch(() => []),
+      ContentService.getAllIngredients().catch(() => []),
+      ContentService.getAllArticles().catch(() => []),
+    ]);
+    // Fallback to mock data when WordPress is unreachable or returns empty (offline build/demo)
+    const fbDiseases = diseases.length ? diseases : DISEASES.filter((d) => d.featured);
+    const fbRemedies = remedies.length ? remedies : REMEDIES.filter((r) => r.featured);
+    const fbHerbs = herbs.length ? herbs : INGREDIENTS;
+    const fbPosts = posts.length ? posts : ARTICLES;
+    return { diseases: fbDiseases, remedies: fbRemedies, herbs: fbHerbs, posts: fbPosts };
+  } catch {
+    return {
+      diseases: DISEASES.filter((d) => d.featured),
+      remedies: REMEDIES.filter((r) => r.featured),
+      herbs: INGREDIENTS,
+      posts: ARTICLES,
     };
-    router.push(map[page] || "/");
-  };
-
-  const onSearchSubmit = (query: string) => {
-    router.push(`/search?q=${encodeURIComponent(query)}`);
-  };
-
-  const handleHeroSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchInput.trim()) {
-      onSearchSubmit(searchInput.trim());
-    }
-  };
-
-  const popularSearches = [
-    "Acidity (Amlapitta)",
-    "Joint Stiffness",
-    "Dry Cough",
-    "Sleep & Anidra",
-    "Ashwagandha",
-    "Turmeric",
-  ];
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center p-4">
-        <Loader2 className="w-10 h-10 text-[#1E4D30] animate-spin mb-4" />
-        <p className="text-[#4d5c50] font-medium animate-pulse">Loading Authentic Wisdom...</p>
-      </div>
-    );
   }
+}
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center p-4 text-center">
-        <div className="bg-white p-8 rounded-xl border border-[#ded5c5] shadow-sm max-w-md">
-          <AlertTriangle size={48} className="mx-auto text-amber-600 mb-4" />
-          <h2 className="text-xl font-bold text-[#14261B] mb-2">Connection Error</h2>
-          <p className="text-[#4d5c50] mb-6">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-[#1E4D30] text-white rounded-md font-semibold hover:bg-[#163a24] transition-colors cursor-pointer"
-          >
-            Retry Connection
-          </button>
-        </div>
-      </div>
-    );
-  }
+export default async function HomePage() {
+  const { diseases: featuredDiseases, remedies: featuredRemedies, herbs: ingredients, posts: articles } = await getHomeData();
 
   return (
     <div className="bg-[#FAF8F5]">
@@ -141,45 +69,7 @@ export default function HomePage() {
                 Explore an authentic library of classical disease pathologies, time-tested <span className="text-[#1A4329] font-medium italic">Desi Nuskhe</span> home remedies, and dravyaguna botanical profiles reviewed by certified Vaidyas.
               </p>
 
-              <form onSubmit={handleHeroSearch} className="mb-5 max-w-xl">
-                <div className="relative flex items-center shadow-sm rounded-lg bg-white border border-[#D5CDBD] p-1.5 focus-within:border-[#1E4D30] focus-within:ring-2 focus-within:ring-[#1E4D30]/15 transition-all">
-                  <div className="pl-3 pr-2 text-[#7c8b7f]">
-                    <Search size={20} />
-                  </div>
-                  <input
-                    type="text"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="Search symptoms, remedies (e.g. Acidity, Golden Milk, Tulsi)..."
-                    className="w-full bg-transparent text-sm sm:text-base text-[#1c2c20] placeholder-[#8f9b91] focus:outline-none py-2"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-md transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
-                  >
-                    <span>Search</span>
-                    <ArrowRight size={15} />
-                  </button>
-                </div>
-              </form>
-
-              <div className="flex flex-wrap items-center gap-2 text-xs text-[#5f6e63]">
-                <span className="font-medium text-[#2d3a30]">Frequent Searches:</span>
-                {popularSearches.map((term, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      const clean = term.split(" ")[0];
-                      setSearchInput(clean);
-                      onSearchSubmit(clean);
-                    }}
-                    className="px-2.5 py-1 rounded bg-[#EAE3D5]/70 hover:bg-[#ded5c5] text-[#2c3d31] transition-colors cursor-pointer border border-[#ded5c5]"
-                  >
-                    {term}
-                  </button>
-                ))}
-              </div>
+              <HomeHeroSearch />
             </div>
 
             <div className="lg:col-span-5">
@@ -197,12 +87,12 @@ export default function HomePage() {
                     <span className="inline-block text-xs font-medium px-2 py-0.5 rounded bg-[#f0f7f2] text-[#1E4D30] mb-2">
                       {featuredDiseases[0].category}
                     </span>
-                    <h2
-                      className="text-xl sm:text-2xl font-editorial font-bold text-[#14261B] hover:text-[#1E4D30] cursor-pointer transition-colors"
-                      onClick={() => onNavigate("disease-detail", featuredDiseases[0].slug)}
+                    <Link
+                      href={`/diseases/${featuredDiseases[0].slug}`}
+                      className="block text-xl sm:text-2xl font-editorial font-bold text-[#14261B] hover:text-[#1E4D30] transition-colors"
                     >
                       {featuredDiseases[0].name}
-                    </h2>
+                    </Link>
                     <p className="text-xs sm:text-sm text-[#546257] mt-2 leading-relaxed line-clamp-3">
                       {featuredDiseases[0].summary}
                     </p>
@@ -219,13 +109,13 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => onNavigate("disease-detail", featuredDiseases[0].slug)}
-                    className="w-full text-center bg-[#F1ECE1] hover:bg-[#e4ddcf] text-[#1E4D30] font-semibold text-xs sm:text-sm py-2.5 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                  <Link
+                    href={`/diseases/${featuredDiseases[0].slug}`}
+                    className="w-full text-center bg-[#F1ECE1] hover:bg-[#e4ddcf] text-[#1E4D30] font-semibold text-xs sm:text-sm py-2.5 rounded-md transition-colors flex items-center justify-center gap-1.5"
                   >
                     <span>Read Complete Clinical Guide</span>
                     <ArrowRight size={14} />
-                  </button>
+                  </Link>
                 </div>
               ) : (
                 <div className="bg-white rounded-xl border border-[#ded6c8] shadow-md p-6 sm:p-7 text-center">
@@ -294,21 +184,21 @@ export default function HomePage() {
                 Common Health Conditions & Pathologies
               </h2>
             </div>
-            <button
-              onClick={() => onNavigate("diseases")}
-              className="mt-3 md:mt-0 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#133621] flex items-center gap-1 cursor-pointer transition-colors"
+            <Link
+              href="/diseases"
+              className="mt-3 md:mt-0 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#133621] flex items-center gap-1 transition-colors"
             >
               <span>View All Disease Guides</span>
               <ArrowRight size={15} />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredDiseases.slice(0, 3).map((disease) => (
-              <div
+              <Link
                 key={disease.id}
-                onClick={() => onNavigate("disease-detail", disease.slug)}
-                className="group bg-white rounded-lg border border-[#e5ded2] p-5 hover:border-[#1E4D30]/40 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+                href={`/diseases/${disease.slug}`}
+                className="group bg-white rounded-lg border border-[#e5ded2] p-5 hover:border-[#1E4D30]/40 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-3">
@@ -343,7 +233,7 @@ export default function HomePage() {
                     <ArrowRight size={14} />
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -362,29 +252,37 @@ export default function HomePage() {
                 Formulations crafted from household spices and kitchen apothecaries with dosage clarity.
               </p>
             </div>
-            <button
-              onClick={() => onNavigate("remedies")}
-              className="mt-3 md:mt-0 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#133621] flex items-center gap-1 cursor-pointer transition-colors"
+            <Link
+              href="/remedies"
+              className="mt-3 md:mt-0 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#133621] flex items-center gap-1 transition-colors"
             >
               <span>Explore All Desi Nuskhe</span>
               <ArrowRight size={15} />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredRemedies.slice(0, 3).map((remedy) => (
-              <div
+            {featuredRemedies.slice(0, 3).map((remedy, idx) => (
+              <Link
                 key={remedy.id}
-                onClick={() => onNavigate("remedy-detail", remedy.slug)}
-                className="group bg-white rounded-lg border border-[#e1d9cc] overflow-hidden hover:shadow-md hover:border-[#1E4D30]/40 transition-all cursor-pointer flex flex-col justify-between"
+                href={`/remedies/${remedy.slug}`}
+                className="group bg-white rounded-lg border border-[#e1d9cc] overflow-hidden hover:shadow-md hover:border-[#1E4D30]/40 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="h-44 overflow-hidden relative border-b border-[#eee7da]">
-                    <img
-                      src={remedy.featuredImage}
-                      alt={remedy.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    {remedy.featuredImage ? (
+                      <Image
+                        src={remedy.featuredImage}
+                        alt={remedy.name}
+                        width={400}
+                        height={176}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={idx === 0}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#f0ebe1]" />
+                    )}
                     <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2.5 py-0.5 rounded text-[11px] font-semibold text-[#1E4D30] shadow-xs">
                       {remedy.hindiName || "देसी नुस्खा"}
                     </div>
@@ -425,7 +323,7 @@ export default function HomePage() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -444,25 +342,32 @@ export default function HomePage() {
                 Energetics (Rasa, Virya, Vipaka) and clinical applications according to Dravyaguna.
               </p>
             </div>
-            <button
-              onClick={() => onNavigate("ingredients")}
-              className="mt-3 md:mt-0 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#133621] flex items-center gap-1 cursor-pointer transition-colors"
+            <Link
+              href="/ingredients"
+              className="mt-3 md:mt-0 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#133621] flex items-center gap-1 transition-colors"
             >
               <span>Browse Full Herb Library</span>
               <ArrowRight size={15} />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {ingredients.map((herb) => (
-              <div
+            {ingredients.slice(0, 12).map((herb) => (
+              <Link
                 key={herb.id}
-                onClick={() => onNavigate("ingredient-detail", herb.slug)}
-                className="group bg-white rounded-lg border border-[#e5dfd3] p-3.5 hover:border-[#1E4D30] hover:shadow-sm transition-all cursor-pointer text-center flex flex-col items-center"
+                href={`/ingredients/${herb.slug}`}
+                className="group bg-white rounded-lg border border-[#e5dfd3] p-3.5 hover:border-[#1E4D30] hover:shadow-sm transition-all text-center flex flex-col items-center"
               >
                 <div className="w-16 h-16 rounded-full overflow-hidden mb-3 border border-[#ded5c5]">
                   {herb.featuredImage ? (
-                    <img src={herb.featuredImage} alt={herb.commonName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                    <Image
+                      src={herb.featuredImage}
+                      alt={herb.commonName}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      sizes="64px"
+                    />
                   ) : (
                     <div className="w-full h-full bg-[#f0ebe1] flex items-center justify-center text-[#8B6B3E]">
                       <Leaf size={20} />
@@ -474,7 +379,7 @@ export default function HomePage() {
                 </h4>
                 <div className="text-[11px] font-serif italic text-[#8B6B3E] mt-0.5">{herb.sanskritName}</div>
                 <div className="text-[10px] text-[#778679] mt-2 bg-[#f6f2ea] px-2 py-0.5 rounded-full">{herb.category}</div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -498,7 +403,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {articles.slice(0, 6).map((article) => (
+            {articles.slice(0, 6).map((article, idx) => (
               <Link
                 key={article.id}
                 href={`/articles/${article.slug}`}
@@ -506,11 +411,19 @@ export default function HomePage() {
               >
                 <div>
                   <div className="h-48 rounded-lg overflow-hidden mb-4 border border-[#e5dfd3]">
-                    <img
-                      src={article.coverImage}
-                      alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    {article.coverImage ? (
+                      <Image
+                        src={article.coverImage}
+                        alt={article.title}
+                        width={400}
+                        height={192}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={idx === 0}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#f0ebe1]" />
+                    )}
                   </div>
 
                   <div className="flex items-center gap-2 text-[11px] text-[#718074] mb-2">
@@ -529,13 +442,13 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-2.5 pt-3 border-t border-[#f0ebd5]">
-                    {article.author.avatarUrl ? (
-                      <img src={article.author.avatarUrl} alt={article.author.name} className="w-7 h-7 rounded-full object-cover" />
-                    ) : (
-                      <div className="w-7 h-7 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center shrink-0">
-                        <span className="text-[10px] font-bold">{article.author.name.charAt(0)}</span>
-                      </div>
-                    )}
+                  {article.author.avatarUrl ? (
+                    <Image src={article.author.avatarUrl} alt={article.author.name} width={28} height={28} className="w-7 h-7 rounded-full object-cover" />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center shrink-0">
+                      <span className="text-[10px] font-bold">{article.author.name.charAt(0)}</span>
+                    </div>
+                  )}
 
                   <div className="text-xs">
                     <div className="font-semibold text-[#1e2e21]">{article.author.name}</div>
@@ -572,12 +485,12 @@ export default function HomePage() {
                 Patientscure bridges the timeless wisdom of classical Brihat Trayi Samhitas with modern botanical pharmacology. Every home remedy, ingredient dosage, and symptom overview is rigorously validated by qualified Ayurvedic physicians (BAMS / MD Ayurveda) before publication.
               </p>
             </div>
-            <button
-              onClick={() => onNavigate("about")}
-              className="shrink-0 px-4 py-2 bg-white text-[#1E4D30] hover:bg-[#FAF8F5] border border-[#cfc5b4] rounded font-medium text-xs sm:text-sm cursor-pointer transition-colors"
+            <Link
+              href="/about"
+              className="shrink-0 px-4 py-2 bg-white text-[#1E4D30] hover:bg-[#FAF8F5] border border-[#cfc5b4] rounded font-medium text-xs sm:text-sm transition-colors text-center"
             >
               Learn About Our Vaidyas
-            </button>
+            </Link>
           </div>
         </div>
       </section>

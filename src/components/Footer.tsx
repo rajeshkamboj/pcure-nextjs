@@ -1,43 +1,8 @@
-"use client";
-
-import React from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Leaf, ShieldCheck, ArrowUp } from "lucide-react";
+import { ShieldCheck, ArrowUp } from "lucide-react";
 
-interface FooterProps {
-  onNavigate?: (page: string, slug?: string) => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const router = useRouter();
-
-  const navigate = (page: string, slug?: string) => {
-    if (onNavigate) {
-      onNavigate(page, slug);
-      return;
-    }
-    const map: Record<string, string> = {
-      home: "/",
-      diseases: "/diseases",
-      "disease-detail": slug ? `/diseases/${slug}` : "/diseases",
-      remedies: "/remedies",
-      "remedy-detail": slug ? `/remedies/${slug}` : "/remedies",
-      ingredients: "/ingredients",
-      "ingredient-detail": slug ? `/ingredients/${slug}` : "/ingredients",
-      about: "/about",
-      contact: "/contact",
-      privacy: "/privacy",
-      terms: "/terms",
-    };
-    const href = map[page] || "/";
-    router.push(href);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
+export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#14261B] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -45,10 +10,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#233f2d]">
           {/* Brand Info */}
           <div className="md:col-span-4 space-y-4">
-            <div
-              onClick={() => navigate("home")}
-              className="flex items-center gap-3 cursor-pointer group"
-            >
+            <Link href="/" className="flex items-center gap-3 cursor-pointer group">
               <Image
                 src="/images/logo.webp"
                 alt="PatientsCure"
@@ -56,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 height={120}
                 className="h-auto w-[160px] brightness-0 invert"
               />
-            </div>
+            </Link>
 
             <p className="text-xs text-[#a2b5a6] leading-relaxed max-w-sm">
               An evidence-informed Ayurvedic health publication and clinical directory. Dedicated to classical Samhita translations, peer-reviewed Desi Nuskhe, and botanical dravyaguna wisdom.
@@ -75,44 +37,41 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </h4>
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
               <li>
-                <button
-                  onClick={() => navigate("disease-detail", "amlapitta-hyperacidity-acid-reflux")}
+                <Link
+                  href="/diseases/amlapitta-hyperacidity-acid-reflux"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Acid Reflux (Amlapitta)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("disease-detail", "sandhivata-osteoarthritis-joint-stiffness")}
+                <Link
+                  href="/diseases/sandhivata-osteoarthritis-joint-stiffness"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Joint Stiffness (Sandhivata)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("disease-detail", "kasa-pratishyaya-respiratory-congestion")}
+                <Link
+                  href="/diseases/kasa-pratishyaya-respiratory-congestion"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Respiratory Cough (Kasa)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("disease-detail", "anidra-sleep-deprivation-insomnia")}
+                <Link
+                  href="/diseases/anidra-sleep-deprivation-insomnia"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Insomnia (Anidra)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("diseases")}
-                  className="text-[#64B584] hover:underline cursor-pointer font-medium"
-                >
+                <Link href="/diseases" className="text-[#64B584] hover:underline cursor-pointer font-medium">
                   Browse All Conditions →
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -124,44 +83,41 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </h4>
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
               <li>
-                <button
-                  onClick={() => navigate("remedy-detail", "haldi-doodh-golden-turmeric-elixir")}
+                <Link
+                  href="/remedies/haldi-doodh-golden-turmeric-elixir"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Golden Milk (Haldi Doodh)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("remedy-detail", "ardraka-deepana-ginger-lemon-relish")}
+                <Link
+                  href="/remedies/ardraka-deepana-ginger-lemon-relish"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Ginger Agni Relish (Ardraka)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("ingredient-detail", "ashwagandha-indian-ginseng")}
+                <Link
+                  href="/ingredients/ashwagandha-indian-ginseng"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Ashwagandha Root Profile
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("ingredient-detail", "amla-indian-gooseberry")}
+                <Link
+                  href="/ingredients/amla-indian-gooseberry"
                   className="hover:text-white hover:underline cursor-pointer transition-colors"
                 >
                   Amalaki (Indian Gooseberry)
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => navigate("remedies")}
-                  className="text-[#64B584] hover:underline cursor-pointer font-medium"
-                >
+                <Link href="/remedies" className="text-[#64B584] hover:underline cursor-pointer font-medium">
                   Explore All Desi Nuskhe →
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -173,24 +129,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </h4>
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
               <li>
-                <button onClick={() => navigate("about")} className="hover:text-white cursor-pointer transition-colors">
+                <Link href="/about" className="hover:text-white cursor-pointer transition-colors">
                   Our Editorial Board
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => navigate("contact")} className="hover:text-white cursor-pointer transition-colors">
+                <Link href="/contact" className="hover:text-white cursor-pointer transition-colors">
                   Contact Editors
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => navigate("privacy")} className="hover:text-white cursor-pointer transition-colors">
+                <Link href="/privacy" className="hover:text-white cursor-pointer transition-colors">
                   Privacy Policy
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => navigate("terms")} className="hover:text-white cursor-pointer transition-colors">
+                <Link href="/terms" className="hover:text-white cursor-pointer transition-colors">
                   Terms of Service
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -204,17 +160,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Bottom Sub-footer */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#879b8c] gap-4">
-          <div>
-            © {new Date().getFullYear()} PatientsCure Health Publication. All rights reserved. Classical Samhita texts revered.
-          </div>
+          <div>© {new Date().getFullYear()} PatientsCure Health Publication. All rights reserved. Classical Samhita texts revered.</div>
 
-          <button
-            onClick={scrollToTop}
+          <a
+            href="#"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#1e3926] hover:bg-[#254930] text-[#c2d6c7] text-xs transition-colors cursor-pointer"
+            aria-label="Back to top"
           >
             <span>Back to top</span>
             <ArrowUp size={13} />
-          </button>
+          </a>
         </div>
       </div>
     </footer>

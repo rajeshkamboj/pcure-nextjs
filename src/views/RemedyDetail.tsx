@@ -11,22 +11,35 @@ import {
   Info,
   Loader2
 } from 'lucide-react';
+import { useRouter } from "next/navigation";
 import { Remedy } from '../types';
 import { ContentService } from '../services/contentService';
 
 interface RemedyDetailProps {
   slug: string | undefined;
-  onNavigate: (page: string, slug?: string) => void;
+  onNavigate?: (page: string, slug?: string) => void;
+  initialRemedy?: Remedy | null;
+  initialRelatedDiseaseSlug?: string | null;
 }
 
-export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) => {
-  const [remedy, setRemedy] = useState<Remedy | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate, initialRemedy, initialRelatedDiseaseSlug }) => {
+  const router = useRouter();
+  const navigate = (page: string, s?: string) => {
+    if (onNavigate) return onNavigate(page, s);
+    const map: Record<string, string> = { home: "/", diseases: "/diseases", "disease-detail": s ? `/diseases/${s}` : "/diseases", remedies: "/remedies", "remedy-detail": s ? `/remedies/${s}` : "/remedies", ingredients: "/ingredients", "ingredient-detail": s ? `/ingredients/${s}` : "/ingredients", about: "/about", contact: "/contact" };
+    router.push(map[page] || "/");
+  };
+  const [remedy, setRemedy] = useState<Remedy | null>(initialRemedy ?? null);
+  const [isLoading, setIsLoading] = useState(!initialRemedy);
+  const [error, setError] = useState<string | null>(initialRemedy === null && initialRemedy !== undefined ? 'Remedy monograph not found' : null);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [relatedDiseaseSlug, setRelatedDiseaseSlug] = useState<string | null>(null);
+  const [relatedDiseaseSlug, setRelatedDiseaseSlug] = useState<string | null>(initialRelatedDiseaseSlug ?? null);
   useEffect(() => {
+    if (initialRemedy !== undefined) {
+      setIsLoading(false);
+      return;
+    }
     async function loadData() {
       if (!slug) {
         setError('No remedy slug provided');
@@ -83,7 +96,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) 
           <h2 className="text-xl font-bold text-[#14261B] mb-2">Remedy Not Found</h2>
           <p className="text-[#4d5c50] mb-6">{error || 'The requested remedy monograph could not be located.'}</p>
           <button
-            onClick={() => onNavigate('remedies')}
+            onClick={() => navigate('remedies')}
             className="px-6 py-2 bg-[#1E4D30] text-white rounded-md font-semibold hover:bg-[#163a24] transition-colors cursor-pointer"
           >
             Back to Library
@@ -99,9 +112,9 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) 
 
         {/* Breadcrumb Navigation */}
         <nav className="mb-6 flex items-center gap-2 text-xs text-[#718074] flex-wrap">
-          <button onClick={() => onNavigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
+          <button onClick={() => navigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
           <span>/</span>
-          <button onClick={() => onNavigate('remedies')} className="hover:text-[#1E4D30] cursor-pointer">Desi Nuskhe</button>
+          <button onClick={() => navigate('remedies')} className="hover:text-[#1E4D30] cursor-pointer">Desi Nuskhe</button>
           <span>/</span>
           <span className="text-[#8B6B3E] font-medium">{remedy.primaryDoshaBalancing} Balancer</span>
           <span>/</span>
@@ -347,7 +360,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ slug, onNavigate }) 
       </h4>
     </div>
     <button
-      onClick={() => onNavigate('disease-detail', relatedDiseaseSlug)}
+      onClick={() => navigate('disease-detail', relatedDiseaseSlug)}
       className="shrink-0 px-4 py-2 rounded bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
     >
       <span>Read Disease Guide</span>

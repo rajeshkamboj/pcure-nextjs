@@ -1,23 +1,17 @@
-"use client";
+import { ContentService } from "@/services/contentService";
+import { IngredientsListClient } from "@/components/IngredientsListClient";
+import { INGREDIENTS } from "@/data/mockData";
 
-import { useRouter } from "next/navigation";
-import { Ingredients } from "@/views/Ingredients";
+export const revalidate = 600;
 
-export default function IngredientsPage() {
-  const router = useRouter();
-  const onNavigate = (page: string, slug?: string) => {
-    const map: Record<string, string> = {
-      home: "/",
-      diseases: "/diseases",
-      "disease-detail": slug ? `/diseases/${slug}` : "/diseases",
-      remedies: "/remedies",
-      "remedy-detail": slug ? `/remedies/${slug}` : "/remedies",
-      ingredients: "/ingredients",
-      "ingredient-detail": slug ? `/ingredients/${slug}` : "/ingredients",
-      about: "/about",
-      contact: "/contact",
-    };
-    router.push(map[page] || "/");
-  };
-  return <Ingredients onNavigate={onNavigate} />;
+export default async function IngredientsPage() {
+  let ingredients: Awaited<ReturnType<typeof ContentService.getAllIngredients>> = [];
+  try {
+    ingredients = await ContentService.getAllIngredients();
+    if (!ingredients.length) ingredients = INGREDIENTS;
+  } catch (e) {
+    console.error("Failed to load ingredients:", e);
+    ingredients = INGREDIENTS;
+  }
+  return <IngredientsListClient initialIngredients={ingredients} />;
 }

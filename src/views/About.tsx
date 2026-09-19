@@ -1,10 +1,11 @@
-"use client";
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { ShieldCheck, BookOpen, HeartPulse, Users } from 'lucide-react';
 import { AUTHORS } from '../data/mockData';
 
 interface AboutProps {
-  onNavigate: (page: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
 export const About: React.FC<AboutProps> = ({ onNavigate }) => {
@@ -14,7 +15,7 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
         
         {/* Breadcrumb Navigation */}
         <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
-          <button onClick={() => onNavigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
+          <Link href="/" className="hover:text-[#1E4D30]">Home</Link>
           <span>/</span>
           <span className="text-[#1a281e] font-medium">About PatientScure</span>
         </div>
@@ -80,9 +81,11 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
           <div className="space-y-6">
             {Object.values(AUTHORS).map((author) => (
               <div key={author.id} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-4 rounded-lg bg-[#FAF8F5] border border-[#e8e0d2]">
-                <img
+                <Image
                   src={author.avatarUrl}
                   alt={author.name}
+                  width={64}
+                  height={64}
                   className="w-16 h-16 rounded-full object-cover border border-[#ded5c5] shrink-0"
                 />
                 <div className="text-center sm:text-left">

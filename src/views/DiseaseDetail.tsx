@@ -15,25 +15,40 @@ import {
   Droplets,
   Loader2
 } from 'lucide-react';
+import { useRouter } from "next/navigation";
 import { Disease, Remedy, Ingredient } from '../types';
 import { ContentService } from '../services/contentService';
 
 interface DiseaseDetailProps {
   slug: string | undefined;
-  onNavigate: (page: string, slug?: string) => void;
+  onNavigate?: (page: string, slug?: string) => void;
+  initialDisease?: Disease | null;
+  initialRemedies?: Remedy[];
+  initialIngredients?: Ingredient[];
 }
 
-export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate }) => {
-  const [disease, setDisease] = useState<Disease | null>(null);
-  const [associatedRemedies, setAssociatedRemedies] = useState<Remedy[]>([]);
-  const [associatedIngredients, setAssociatedIngredients] = useState<Ingredient[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate, initialDisease, initialRemedies, initialIngredients }) => {
+  const router = useRouter();
+  const navigate = (page: string, s?: string) => {
+    if (onNavigate) return onNavigate(page, s);
+    const map: Record<string, string> = { home: "/", diseases: "/diseases", "disease-detail": s ? `/diseases/${s}` : "/diseases", remedies: "/remedies", "remedy-detail": s ? `/remedies/${s}` : "/remedies", ingredients: "/ingredients", "ingredient-detail": s ? `/ingredients/${s}` : "/ingredients", about: "/about", contact: "/contact" };
+    router.push(map[page] || "/");
+  };
+  const [disease, setDisease] = useState<Disease | null>(initialDisease ?? null);
+  const [associatedRemedies, setAssociatedRemedies] = useState<Remedy[]>(initialRemedies ?? []);
+  const [associatedIngredients, setAssociatedIngredients] = useState<Ingredient[]>(initialIngredients ?? []);
+  const [isLoading, setIsLoading] = useState(!initialDisease);
+  const [error, setError] = useState<string | null>(initialDisease === null && initialDisease !== undefined ? 'Disease monograph not found' : null);
   const [bookmarked, setBookmarked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   useEffect(() => {
+    if (initialDisease !== undefined) {
+      // Server-provided data, skip client fetch
+      setIsLoading(false);
+      return;
+    }
     async function loadData() {
       if (!slug) {
         setError('No disease slug provided');
@@ -114,7 +129,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate }
           <h2 className="text-xl font-bold text-[#14261B] mb-2">Content Not Found</h2>
           <p className="text-[#4d5c50] mb-6">{error || 'The requested disease monograph could not be located.'}</p>
           <button
-            onClick={() => onNavigate('diseases')}
+            onClick={() => navigate('diseases')}
             className="px-6 py-2 bg-[#1E4D30] text-white rounded-md font-semibold hover:bg-[#163a24] transition-colors cursor-pointer"
           >
             Back to Directory
@@ -130,9 +145,9 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate }
 
         {/* Breadcrumb Navigation */}
         <nav className="mb-6 flex items-center gap-2 text-xs text-[#718074] flex-wrap">
-          <button onClick={() => onNavigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
+          <button onClick={() => navigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
           <span>/</span>
-          <button onClick={() => onNavigate('diseases')} className="hover:text-[#1E4D30] cursor-pointer">Diseases</button>
+          <button onClick={() => navigate('diseases')} className="hover:text-[#1E4D30] cursor-pointer">Diseases</button>
           <span>/</span>
           <span className="text-[#8B6B3E] font-medium">{disease.category}</span>
           <span>/</span>
@@ -277,7 +292,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate }
                 {associatedIngredients.map((herb) => (
                   <div
                     key={herb.id}
-                    onClick={() => onNavigate('ingredient-detail', herb.slug)}
+                    onClick={() => navigate('ingredient-detail', herb.slug)}
                     className="flex items-center gap-3 p-2 rounded hover:bg-[#FAF8F5] cursor-pointer transition-colors border border-transparent hover:border-[#ded5c5]"
                   >
                     <img src={herb.featuredImage} alt={herb.commonName} className="w-10 h-10 rounded-full object-cover shrink-0" />
@@ -508,7 +523,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate }
                         <span className="text-xs text-[#718074]">Prep time: {remedy.prepTime}</span>
                       </div>
                       <h3 className="text-lg font-editorial font-bold text-[#16271b] hover:text-[#1E4D30] cursor-pointer"
-                          onClick={() => onNavigate('remedy-detail', remedy.slug)}>
+                          onClick={() => navigate('remedy-detail', remedy.slug)}>
                         {remedy.name}
                       </h3>
                       <p className="text-xs sm:text-sm text-[#4d5c50] mt-1 line-clamp-2">
@@ -517,7 +532,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({ slug, onNavigate }
                     </div>
 
                     <button
-                      onClick={() => onNavigate('remedy-detail', remedy.slug)}
+                      onClick={() => navigate('remedy-detail', remedy.slug)}
                       className="shrink-0 px-4 py-2 rounded bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                     >
                       <span>Full Recipe & Dosage</span>

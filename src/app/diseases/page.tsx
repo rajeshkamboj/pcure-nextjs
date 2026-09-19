@@ -1,23 +1,17 @@
-"use client";
+import { ContentService } from "@/services/contentService";
+import { DiseasesListClient } from "@/components/DiseasesListClient";
+import { DISEASES } from "@/data/mockData";
 
-import { useRouter } from "next/navigation";
-import { Diseases } from "@/views/Diseases";
+export const revalidate = 600;
 
-export default function DiseasesPage() {
-  const router = useRouter();
-  const onNavigate = (page: string, slug?: string) => {
-    const map: Record<string, string> = {
-      home: "/",
-      diseases: "/diseases",
-      "disease-detail": slug ? `/diseases/${slug}` : "/diseases",
-      remedies: "/remedies",
-      "remedy-detail": slug ? `/remedies/${slug}` : "/remedies",
-      ingredients: "/ingredients",
-      "ingredient-detail": slug ? `/ingredients/${slug}` : "/ingredients",
-      about: "/about",
-      contact: "/contact",
-    };
-    router.push(map[page] || "/");
-  };
-  return <Diseases onNavigate={onNavigate} />;
+export default async function DiseasesPage() {
+  let diseases: Awaited<ReturnType<typeof ContentService.getAllDiseases>> = [];
+  try {
+    diseases = await ContentService.getAllDiseases();
+    if (!diseases.length) diseases = DISEASES;
+  } catch (e) {
+    console.error("Failed to load diseases:", e);
+    diseases = DISEASES;
+  }
+  return <DiseasesListClient initialDiseases={diseases} />;
 }

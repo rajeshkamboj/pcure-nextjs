@@ -1,10 +1,10 @@
-"use client";
 import React from 'react';
+import Link from 'next/link';
 import { ShieldCheck, FileText } from 'lucide-react';
 
 interface LegalProps {
   type: 'privacy' | 'terms';
-  onNavigate: (page: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
 export const Legal: React.FC<LegalProps> = ({ type, onNavigate }) => {
@@ -16,7 +16,7 @@ export const Legal: React.FC<LegalProps> = ({ type, onNavigate }) => {
         
         {/* Breadcrumb Navigation */}
         <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
-          <button onClick={() => onNavigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
+          <Link href="/" className="hover:text-[#1E4D30]">Home</Link>
           <span>/</span>
           <span className="text-[#1a281e] font-medium">{isPrivacy ? 'Privacy Policy' : 'Terms of Service'}</span>
         </div>

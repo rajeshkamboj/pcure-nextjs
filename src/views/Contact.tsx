@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Mail, MapPin, Send, CheckCircle2 } from 'lucide-react';
 
 interface ContactProps {
-  onNavigate: (page: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
 export const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
@@ -28,7 +29,7 @@ export const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
         
         {/* Breadcrumb Navigation */}
         <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
-          <button onClick={() => onNavigate('home')} className="hover:text-[#1E4D30] cursor-pointer">Home</button>
+          <Link href="/" className="hover:text-[#1E4D30]">Home</Link>
           <span>/</span>
           <span className="text-[#1a281e] font-medium">Contact Editorial Team</span>
         </div>
