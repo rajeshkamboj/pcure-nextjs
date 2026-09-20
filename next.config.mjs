@@ -27,11 +27,6 @@ const imageHosts = [...new Set([wpHost, ...extraHosts].filter(Boolean))];
 
 const nextConfig = {
   poweredByHeader: false,
-  // The repository has lockfiles above this app directory. Pin Turbopack to
-  // this Next.js project so it does not infer a different workspace root.
-  turbopack: {
-    root: process.cwd(),
-  },
   images: {
     remotePatterns: imageHosts.map((hostname) => ({ hostname })),
     formats: ['image/avif', 'image/webp'],

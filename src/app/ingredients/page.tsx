@@ -3,7 +3,7 @@ import { Ingredients } from "@/views/Ingredients";
 import { ContentService } from "@/services/contentService";
 import { toIngredientListItem } from "@/lib/listItems";
 
-export const revalidate = 600;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Classical Medicinal Plants, Spices & Herbs | PatientsCure",

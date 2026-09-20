@@ -3,8 +3,8 @@ import { Diseases } from "@/views/Diseases";
 import { ContentService } from "@/services/contentService";
 import { toDiseaseListItem } from "@/lib/listItems";
 
-// ISR: re-generate at most every 10 minutes (must be a literal; keep in sync with WP_REVALIDATE_SECONDS).
-export const revalidate = 600;
+// ISR: re-generate at most every 60 seconds (must be a literal; keep in sync with WP_REVALIDATE_SECONDS).
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Ailment & Disease Directory (Roga Nidana) | PatientsCure",

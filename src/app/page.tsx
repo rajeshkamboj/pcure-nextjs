@@ -13,9 +13,9 @@ import { ContentService } from "@/services/contentService";
 import { HeroSearch } from "@/components/home/HeroSearch";
 import { RemoteImage } from "@/components/ui/RemoteImage";
 
-// ISR: the whole home page is generated at build and refreshed at most every 10 minutes
+// ISR: the whole home page is generated at build and refreshed at most every 60 seconds (instantly when the revalidate webhook fires)
 // (literal required by Next; keep in sync with WP_REVALIDATE_SECONDS).
-export const revalidate = 600;
+export const revalidate = 60;
 
 export default async function HomePage() {
   // Server-side, cached, in parallel. Previously these four collections were fetched

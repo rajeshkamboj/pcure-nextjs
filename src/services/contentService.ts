@@ -12,7 +12,7 @@ const IS_SERVER = typeof window === 'undefined';
  * must be static literals, so keep them in sync if you change this).
  * Ignored by the browser's fetch.
  */
-export const WP_REVALIDATE_SECONDS = 600;
+export const WP_REVALIDATE_SECONDS = 60;
 
 const wpFetchInit: RequestInit = {
   next: { revalidate: WP_REVALIDATE_SECONDS, tags: ['wordpress'] },

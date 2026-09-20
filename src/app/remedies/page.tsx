@@ -3,7 +3,7 @@ import { Remedies } from "@/views/Remedies";
 import { ContentService } from "@/services/contentService";
 import { toRemedyListItem } from "@/lib/listItems";
 
-export const revalidate = 600;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Classical Desi Nuskhe (Home Remedies Library) | PatientsCure",

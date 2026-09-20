@@ -4,44 +4,15 @@ import { ArticleDetail } from '@/views/ArticleDetail';
 import { ContentService } from '@/services/contentService';
 import { yoastMetadata } from '@/lib/yoastMetadata';
 
-// ISR: pre-rendered at build for every known slug, refreshed at most every 10 minutes.
+// ISR: pre-rendered at build for every known slug, refreshed at most every 60 seconds (instantly when the revalidate webhook fires).
 // (literal required by Next; keep in sync with WP_REVALIDATE_SECONDS)
-export const revalidate = 600;
-
-// Slugs omitted during a temporary CMS failure remain available for on-demand
-// rendering, rather than becoming a build-time 404.
-export const dynamicParams = true;
+export const revalidate = 60;
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const slugs = await ContentService.getAllSlugs('articles');
-
-  /*
-   * Listing article slugs and reading an individual article use different
-   * WordPress queries. A broken record (or a transient 5xx response) must not
-   * make deployment of every other article fail. Verify each candidate before
-   * static generation; skipped paths will be rendered on their first request
-   * and retried by ISR.
-   */
-  const results = await Promise.allSettled(
-    slugs.map(async (slug) => {
-      await ContentService.getArticleBySlug(slug);
-      return { slug };
-    })
-  );
-
-  return results.flatMap((result, index) => {
-    if (result.status === 'fulfilled') {
-      return [result.value];
-    }
-
-    console.warn(
-      `Skipping static generation for article "${slugs[index]}" because WordPress could not load it:`,
-      result.reason
-    );
-    return [];
-  });
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
