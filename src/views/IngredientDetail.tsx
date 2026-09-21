@@ -230,7 +230,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
                 Botanical Monograph & Clinical Profile
               </h2>
               <div className="text-sm sm:text-base text-[#39493d] leading-relaxed space-y-4">
-                <p>{ingredient.fullDescription}</p>
+                <WordPressContent content={ingredient.fullDescription} />
               </div>
             </div>
 
