@@ -67,7 +67,7 @@ export const About: React.FC = () => {
         <div className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 mb-12 shadow-xs">
           <div className="flex items-center gap-2 mb-2">
             <Users size={18} className="text-[#1E4D30]" />
-            <h2 className="text-xl sm:text-2xl font-editorial font-bold text-[#14261B]">
+            <h2 className="text-xl font-editorial font-bold text-[#14261B]">
               Our Editorial & Clinical Board
             </h2>
           </div>

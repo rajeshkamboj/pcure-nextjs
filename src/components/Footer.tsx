@@ -138,7 +138,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Medical Disclaimer Warning */}
-        <div className="py-6 border-b border-[#233f2d] text-[11px] text-[#93a697] leading-relaxed">
+        <div className="py-6 border-b border-[#233f2d] text-xs text-[#93a697] leading-relaxed">
           <strong className="text-[#b9ccc0] uppercase font-bold">Medical Disclaimer: </strong>
           PatientsCure provides evidence-informed classical Ayurvedic health information for educational purposes only. The articles, desi nuskhe formulations, and botanical profiles are not intended to substitute professional medical diagnosis, clinical consultation, or emergency care. Never disregard qualified medical advice or delay seeking care because of something you read on this website.
         </div>

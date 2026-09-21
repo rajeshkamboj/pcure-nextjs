@@ -83,7 +83,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
 
         {/* Search Header Form */}
         <div className="border-b border-[#e2dbcf] pb-8 mb-8">
-          <h1 className="text-3xl font-editorial font-bold text-[#14261B] mb-4">
+          <h1 className="text-3xl sm:text-4xl font-editorial font-bold text-[#14261B] mb-4">
             Ayurvedic Knowledge Search
           </h1>
 
@@ -168,7 +168,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
               <div>
                 <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#eee6da]">
                   <BookOpen size={16} className="text-[#1E4D30]" />
-                  <h2 className="font-editorial font-bold text-lg text-[#16271b]">
+                  <h2 className="font-editorial font-bold text-xl text-[#16271b]">
                     Disease & Pathological Guides ({results!.diseases.length})
                   </h2>
                 </div>
@@ -184,7 +184,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                           <span className="font-semibold px-2 py-0.5 rounded bg-[#f4efe5] text-[#71552d]">{d.category}</span>
                           <span className="text-[#1E4D30] font-medium">{d.primaryDosha} Dosha</span>
                         </div>
-                        <h3 className="font-editorial font-bold text-base sm:text-lg text-[#16271a] hover:text-[#1E4D30]">{d.name}</h3>
+                        <h3 className="font-editorial font-bold text-lg text-[#16271a] hover:text-[#1E4D30]">{d.name}</h3>
                         <p className="text-xs text-[#526255] line-clamp-2 mt-1">{d.summary}</p>
                       </div>
                       <ArrowRight size={16} className="text-[#1E4D30] shrink-0 hidden sm:block" />
@@ -199,7 +199,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
               <div>
                 <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#eee6da]">
                   <Sparkles size={16} className="text-[#8B6B3E]" />
-                  <h2 className="font-editorial font-bold text-lg text-[#16271b]">
+                  <h2 className="font-editorial font-bold text-xl text-[#16271b]">
                     Desi Nuskhe & Formulations ({results!.remedies.length})
                   </h2>
                 </div>
@@ -216,7 +216,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                           <span>•</span>
                           <span className="text-[#6d7c71]">{r.prepTime}</span>
                         </div>
-                        <h3 className="font-editorial font-bold text-base sm:text-lg text-[#16271a] hover:text-[#1E4D30]">{r.name}</h3>
+                        <h3 className="font-editorial font-bold text-lg text-[#16271a] hover:text-[#1E4D30]">{r.name}</h3>
                         <p className="text-xs text-[#526255] line-clamp-2 mt-1">{r.purpose}</p>
                       </div>
                       <ArrowRight size={16} className="text-[#1E4D30] shrink-0 hidden sm:block" />
@@ -231,7 +231,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
               <div>
                 <div className="flex items-center gap-2 mb-3 pb-1 border-b border-[#eee6da]">
                   <Leaf size={16} className="text-[#1E4D30]" />
-                  <h2 className="font-editorial font-bold text-lg text-[#16271b]">
+                  <h2 className="font-editorial font-bold text-xl text-[#16271b]">
                     Medicinal Herbs & Materia Medica ({results!.ingredients.length})
                   </h2>
                 </div>
@@ -245,8 +245,8 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                       <img src={i.featuredImage} alt={i.commonName} className="w-12 h-12 rounded-full object-cover shrink-0" />
                       <div>
                         <div className="text-xs font-mono text-[#8B6B3E] italic">{i.sanskritName}</div>
-                        <h3 className="font-editorial font-bold text-base text-[#18291d] hover:text-[#1E4D30]">{i.commonName}</h3>
-                        <p className="text-[11px] text-[#6d7c71] line-clamp-1">{i.category}</p>
+                        <h3 className="font-editorial font-bold text-lg text-[#18291d] hover:text-[#1E4D30]">{i.commonName}</h3>
+                        <p className="text-xs text-[#6d7c71] line-clamp-1">{i.category}</p>
                       </div>
                     </div>
                   ))}

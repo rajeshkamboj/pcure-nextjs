@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -19,11 +19,10 @@ const fontSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-const fontSerif = Playfair_Display({
+const fontHeading = Space_Grotesk({
   subsets: ["latin"],
-  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-playfair",
+  variable: "--font-heading",
 });
 
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
@@ -40,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontSerif.variable}`}>
+    <html lang="en" className={`${fontSans.variable} ${fontHeading.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#242a24] antialiased">
         <Header />
 

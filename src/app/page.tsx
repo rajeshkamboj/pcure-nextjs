@@ -45,7 +45,7 @@ export default async function HomePage() {
                 Classical Wisdom • Evidence-Informed
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-editorial font-bold text-[#14261B] tracking-tight leading-[1.18] mb-4">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[#14261B] tracking-tight leading-[1.18] mb-4">
                 Timeless Ayurvedic Healing, Documented with Clinical Precision.
               </h1>
 
@@ -64,14 +64,14 @@ export default async function HomePage() {
                       <Activity size={14} />
                       <span>Featured Classical Monograph</span>
                     </div>
-                    <span className="text-[11px] font-medium text-[#7c8b7f] bg-[#f4efe6] px-2 py-0.5 rounded">Charaka Samhita</span>
+                    <span className="text-xs font-medium text-[#7c8b7f] bg-[#f4efe6] px-2 py-0.5 rounded">Charaka Samhita</span>
                   </div>
 
                   <div className="mb-4">
                     <span className="inline-block text-xs font-medium px-2 py-0.5 rounded bg-[#f0f7f2] text-[#1E4D30] mb-2">
                       {featuredDiseases[0].category}
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-editorial font-bold text-[#14261B] hover:text-[#1E4D30] transition-colors">
+                    <h2 className="text-xl font-editorial font-bold text-[#14261B] hover:text-[#1E4D30] transition-colors">
                       <Link href={`/diseases/${featuredDiseases[0].slug}`}>{featuredDiseases[0].name}</Link>
                     </h2>
                     <p className="text-xs sm:text-sm text-[#546257] mt-2 leading-relaxed line-clamp-3">
@@ -82,7 +82,7 @@ export default async function HomePage() {
                   <div className="bg-[#FAF8F5] p-3.5 rounded-lg border border-[#e8e1d5] flex items-center justify-between mb-5">
                     <div className="text-xs text-[#4d5c50]">
                       <div className="font-semibold text-[#203325]">Reviewed by {featuredDiseases[0].reviewedBy.name}</div>
-                      <div className="text-[11px] text-[#718074]">{featuredDiseases[0].reviewedBy.credentials}</div>
+                      <div className="text-xs text-[#718074]">{featuredDiseases[0].reviewedBy.credentials}</div>
                     </div>
                     <div className="text-xs font-medium text-[#1E4D30] flex items-center gap-1">
                       <ShieldCheck size={16} />
@@ -115,7 +115,7 @@ export default async function HomePage() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-[#1a281e] uppercase tracking-wide">Classical Samhitas</h4>
-                <p className="text-[11px] text-[#69796e] leading-tight">Charaka, Sushruta & Vagbhata texts</p>
+                <p className="text-xs text-[#69796e] leading-tight">Charaka, Sushruta & Vagbhata texts</p>
               </div>
             </div>
 
@@ -125,7 +125,7 @@ export default async function HomePage() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-[#1a281e] uppercase tracking-wide">Vaidya-Reviewed</h4>
-                <p className="text-[11px] text-[#69796e] leading-tight">Strict dosage & contraindication safety</p>
+                <p className="text-xs text-[#69796e] leading-tight">Strict dosage & contraindication safety</p>
               </div>
             </div>
 
@@ -135,7 +135,7 @@ export default async function HomePage() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-[#1a281e] uppercase tracking-wide">Pure Desi Nuskhe</h4>
-                <p className="text-[11px] text-[#69796e] leading-tight">Kitchen herbs & accessible remedies</p>
+                <p className="text-xs text-[#69796e] leading-tight">Kitchen herbs & accessible remedies</p>
               </div>
             </div>
 
@@ -145,7 +145,7 @@ export default async function HomePage() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-[#1a281e] uppercase tracking-wide">Dosha Balancing</h4>
-                <p className="text-[11px] text-[#69796e] leading-tight">Vata, Pitta & Kapha harmonizing</p>
+                <p className="text-xs text-[#69796e] leading-tight">Vata, Pitta & Kapha harmonizing</p>
               </div>
             </div>
           </div>
@@ -177,10 +177,10 @@ export default async function HomePage() {
               >
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded bg-[#f4efe5] text-[#71552d]">
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-[#f4efe5] text-[#71552d]">
                       {disease.category}
                     </span>
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-[#e8f2ec] text-[#1E4D30] flex items-center gap-1">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded bg-[#e8f2ec] text-[#1E4D30] flex items-center gap-1">
                       <Droplets size={11} />
                       {disease.primaryDosha} Dosha
                     </span>
@@ -249,17 +249,17 @@ export default async function HomePage() {
                       sizes="(min-width: 1152px) 368px, (min-width: 768px) 50vw, 100vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2.5 py-0.5 rounded text-[11px] font-semibold text-[#1E4D30] shadow-xs">
+                    <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2.5 py-0.5 rounded text-xs font-semibold text-[#1E4D30] shadow-xs">
                       {remedy.hindiName || "देसी नुस्खा"}
                     </div>
-                    <div className="absolute top-2.5 right-2.5 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-[10px] font-medium flex items-center gap-1">
+                    <div className="absolute top-2.5 right-2.5 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
                       <Clock size={11} />
                       <span>{remedy.prepTime}</span>
                     </div>
                   </div>
 
                   <div className="p-5">
-                    <div className="text-[11px] font-medium text-[#8B6B3E] uppercase tracking-wider mb-1.5">
+                    <div className="text-xs font-medium text-[#8B6B3E] uppercase tracking-wider mb-1.5">
                       Balances {remedy.primaryDoshaBalancing} Dosha
                     </div>
                     <h3 className="text-lg font-editorial font-bold text-[#1b2b20] group-hover:text-[#1E4D30] transition-colors leading-snug mb-2">
@@ -282,7 +282,7 @@ export default async function HomePage() {
                   </div>
 
                   <div className="px-5 pb-4 pt-1 flex items-center justify-between text-xs text-[#1E4D30] font-semibold">
-                    <span className="text-[11px] text-[#78887c] font-normal">{remedy.ingredients.length} Pure Ingredients</span>
+                    <span className="text-xs text-[#78887c] font-normal">{remedy.ingredients.length} Pure Ingredients</span>
                     <span className="flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
                       <span>Recipe & Dosage</span>
                       <ArrowRight size={13} />
@@ -333,8 +333,8 @@ export default async function HomePage() {
                 <h4 className="font-editorial font-bold text-sm text-[#182a1d] group-hover:text-[#1E4D30] transition-colors leading-tight">
                   {herb.commonName}
                 </h4>
-                <div className="text-[11px] font-serif italic text-[#8B6B3E] mt-0.5">{herb.sanskritName}</div>
-                <div className="text-[10px] text-[#778679] mt-2 bg-[#f6f2ea] px-2 py-0.5 rounded-full">{herb.category}</div>
+                <div className="text-xs font-serif italic text-[#8B6B3E] mt-0.5">{herb.sanskritName}</div>
+                <div className="text-xs text-[#778679] mt-2 bg-[#f6f2ea] px-2 py-0.5 rounded-full">{herb.category}</div>
               </Link>
             ))}
           </div>
@@ -376,7 +376,7 @@ export default async function HomePage() {
                     />
                   </div>
 
-                  <div className="flex items-center gap-2 text-[11px] text-[#718074] mb-2">
+                  <div className="flex items-center gap-2 text-xs text-[#718074] mb-2">
                     <span className="font-semibold text-[#8B6B3E] uppercase">{article.category}</span>
                     <span>•</span>
                     <span>{article.readTime}</span>
@@ -396,14 +396,14 @@ export default async function HomePage() {
                       <RemoteImage src={article.author.avatarUrl} alt={article.author.name} width={28} height={28} className="w-7 h-7 rounded-full object-cover" />
                     ) : (
                       <div className="w-7 h-7 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center shrink-0">
-                        <span className="text-[10px] font-bold">{article.author.name.charAt(0)}</span>
+                        <span className="text-xs font-bold">{article.author.name.charAt(0)}</span>
                       </div>
                     )}
 
                   <div className="text-xs">
                     <div className="font-semibold text-[#1e2e21]">{article.author.name}</div>
 
-                    <div className="text-[10px] text-[#768478]">
+                    <div className="text-xs text-[#768478]">
                       {article.publishedAt
                         ? new Date(article.publishedAt).toLocaleDateString("en-US", {
                             month: "short",

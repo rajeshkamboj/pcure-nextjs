@@ -171,19 +171,19 @@ export const Diseases: React.FC<DiseasesProps> = ({ initialDiseases }) => {
               >
                 <div className="max-w-3xl">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded bg-[#f4efe5] text-[#71552d]">
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-[#f4efe5] text-[#71552d]">
                       {disease.category}
                     </span>
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-[#e8f2ec] text-[#1E4D30] flex items-center gap-1">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded bg-[#e8f2ec] text-[#1E4D30] flex items-center gap-1">
                       <Droplets size={11} />
                       {disease.primaryDosha} Dosha
                     </span>
-                    <span className="text-[11px] text-[#78887b]">
+                    <span className="text-xs text-[#78887b]">
                       Updated: {disease.updatedAt}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-editorial font-bold text-[#14261B] group-hover:text-[#1E4D30] transition-colors leading-snug">
+                  <h3 className="text-lg font-editorial font-bold text-[#14261B] group-hover:text-[#1E4D30] transition-colors leading-snug">
                     {disease.name}
                   </h3>
                   <div className="text-xs font-serif italic text-[#8B6B3E] mb-2">

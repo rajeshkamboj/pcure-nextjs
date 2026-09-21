@@ -52,7 +52,7 @@ export const Contact: React.FC = () => {
                 <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
                   <CheckCircle2 size={24} />
                 </div>
-                <h3 className="font-editorial font-bold text-xl text-[#16271b] mb-2">Message Received</h3>
+                <h3 className="font-editorial font-bold text-lg text-[#16271b] mb-2">Message Received</h3>
                 <p className="text-xs sm:text-sm text-[#546457] leading-relaxed max-w-sm mx-auto mb-6">
                   Thank you for reaching out to PatientScure. Our medical editorial team reviews correspondence during weekday business hours and will respond shortly.
                 </p>
@@ -132,7 +132,7 @@ export const Contact: React.FC = () => {
           {/* Right Column: Office & Direct Contact Info */}
           <div className="md:col-span-5 space-y-6">
             <div className="bg-[#FAF7F0] rounded-xl border border-[#ded5c5] p-6 text-xs sm:text-sm">
-              <h3 className="font-editorial font-bold text-base text-[#16271b] mb-4 pb-2 border-b border-[#e2d9cb]">
+              <h3 className="font-editorial font-bold text-lg text-[#16271b] mb-4 pb-2 border-b border-[#e2d9cb]">
                 Direct Editorial Inquiries
               </h3>
 

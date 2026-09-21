@@ -77,7 +77,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ remedy, relatedDisea
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-editorial font-bold text-[#14261B] leading-tight mb-3">
+                <h1 className="text-3xl sm:text-4xl font-editorial font-bold text-[#14261B] leading-tight mb-3">
                   {remedy.name}
                 </h1>
 
@@ -107,7 +107,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ remedy, relatedDisea
                       <span>Verified by {remedy.verifiedBy.name}</span>
                       <ShieldCheck size={14} className="text-[#1E4D30]" />
                     </div>
-                    <div className="text-[11px] text-[#6e7d72]">{remedy.verifiedBy.credentials}</div>
+                    <div className="text-xs text-[#6e7d72]">{remedy.verifiedBy.credentials}</div>
                   </div>
                 </div>
 
@@ -144,7 +144,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ remedy, relatedDisea
             {/* Exact Ingredients Box */}
             <div className="bg-white rounded-xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs">
               <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#eee8dc]">
-                <h2 className="font-editorial font-bold text-lg text-[#16271a] flex items-center gap-2">
+                <h2 className="font-editorial font-bold text-xl text-[#16271a] flex items-center gap-2">
                   <Sparkles size={16} className="text-[#8B6B3E]" />
                   <span>Required Ingredients</span>
                 </h2>
@@ -161,7 +161,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ remedy, relatedDisea
                       </span>
                     </div>
                     {ing.notes && (
-                      <p className="text-[11px] text-[#6d7c71] mt-1 italic">
+                      <p className="text-xs text-[#6d7c71] mt-1 italic">
                         {ing.notes}
                       </p>
                     )}
@@ -172,7 +172,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ remedy, relatedDisea
 
             {/* Classical Usage Guidelines Card */}
             <div className="bg-[#FAF7F0] rounded-xl border border-[#ded5c5] p-5 sm:p-6">
-              <h2 className="font-editorial font-bold text-lg text-[#16271a] mb-4 pb-2 border-b border-[#e2dacb]">
+              <h2 className="font-editorial font-bold text-xl text-[#16271a] mb-4 pb-2 border-b border-[#e2dacb]">
                 Administration Guidelines (Vidhi)
               </h2>
 
@@ -224,7 +224,7 @@ export const RemedyDetail: React.FC<RemedyDetailProps> = ({ remedy, relatedDisea
 
             {/* Preparation Steps */}
             <div className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-2">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-2">
                 Step-by-Step Preparation (Nirmana Vidhi)
               </h2>
               <p className="text-xs sm:text-sm text-[#617265] mb-6">

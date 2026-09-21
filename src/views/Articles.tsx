@@ -134,7 +134,7 @@ export const Articles: React.FC<ArticlesProps> = ({
 
                   <div className="p-5 flex flex-col flex-1">
 
-                    <div className="flex items-center gap-2 text-[11px] text-[#718074] mb-3">
+                    <div className="flex items-center gap-2 text-xs text-[#718074] mb-3">
                       <span className="font-semibold text-[#8B6B3E] uppercase tracking-wide">
                         {article.category}
                       </span>
@@ -174,7 +174,7 @@ export const Articles: React.FC<ArticlesProps> = ({
                             {article.author.name}
                           </div>
 
-                          <div className="text-[10px] text-[#768478] flex items-center gap-1 mt-0.5">
+                          <div className="text-xs text-[#768478] flex items-center gap-1 mt-0.5">
                             <Calendar size={10} />
 
                             {article.publishedAt

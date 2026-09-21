@@ -156,17 +156,17 @@ export const Ingredients: React.FC<IngredientsProps> = ({ initialIngredients }) 
                   <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded text-xs font-semibold text-[#1E4D30]">
                     {herb.sanskritName} ({herb.hindiName})
                   </div>
-                  <div className="absolute top-3 right-3 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-[10px] font-medium">
+                  <div className="absolute top-3 right-3 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-xs font-medium">
                     {herb.category}
                   </div>
                 </div>
 
                 <div className="p-5">
-                  <div className="text-[11px] font-mono text-[#8B6B3E] italic mb-1">
+                  <div className="text-xs font-mono text-[#8B6B3E] italic mb-1">
                     {herb.botanicalName}
                   </div>
 
-                  <h3 className="text-xl font-editorial font-bold text-[#14261B] group-hover:text-[#1E4D30] transition-colors leading-snug mb-2">
+                  <h3 className="text-lg font-editorial font-bold text-[#14261B] group-hover:text-[#1E4D30] transition-colors leading-snug mb-2">
                     {herb.commonName}
                   </h3>
 

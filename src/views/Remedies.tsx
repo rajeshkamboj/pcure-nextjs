@@ -161,7 +161,7 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
                   <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded text-xs font-semibold text-[#1E4D30] shadow-xs">
                     {remedy.hindiName || 'देसी नुस्खा'}
                   </div>
-                  <div className="absolute top-3 right-3 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-[11px] font-medium flex items-center gap-1">
+                  <div className="absolute top-3 right-3 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
                     <Clock size={12} />
                     <span>{remedy.prepTime}</span>
                   </div>
@@ -170,11 +170,11 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
                 {/* Content */}
                 <div className="p-5">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-semibold text-[#8B6B3E] uppercase tracking-wider flex items-center gap-1">
+                    <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-wider flex items-center gap-1">
                       <Droplets size={12} />
                       Balances {remedy.primaryDoshaBalancing}
                     </span>
-                    <span className="text-[11px] text-[#637267] bg-[#FAF8F5] border border-[#e8e1d5] px-2 py-0.5 rounded">
+                    <span className="text-xs text-[#637267] bg-[#FAF8F5] border border-[#e8e1d5] px-2 py-0.5 rounded">
                       {remedy.difficulty}
                     </span>
                   </div>

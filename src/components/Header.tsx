@@ -100,7 +100,7 @@ export const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E2DBD0]">
       {/* Editorial Top Ribbon */}
-      <div className="bg-[#14261B] text-[#E0E8E2] text-[11px] py-1.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
+      <div className="bg-[#14261B] text-[#E0E8E2] text-xs py-1.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
         <Sparkles size={12} className="text-[#8BB396] shrink-0" />
         <span className="truncate">
           Classical Brihat Trayi Ayurveda • Medically Reviewed by Licensed Vaidyas
@@ -129,7 +129,7 @@ export const Header: React.FC = () => {
           {/* Desktop Navigation Links — single row, no wrapping */}
           <nav
             aria-label="Primary"
-            className="hidden lg:flex items-center gap-0.5 xl:gap-1 text-[13px] xl:text-sm font-medium text-[#2d3a30] min-w-0"
+            className="hidden lg:flex items-center gap-0.5 xl:gap-1 text-xs xl:text-sm font-medium text-[#2d3a30] min-w-0"
           >
             {navLinks.map((link) => (
               <Link
@@ -262,7 +262,7 @@ export const Header: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#e9e2d5] text-[11px] text-[#6d7c71]">
+            <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#e9e2d5] text-xs text-[#6d7c71]">
               <Sparkles size={12} className="text-[#8B6B3E]" />
               <span>Searches span disease monographs, home remedies and the botanical library.</span>
               <ArrowRight size={12} />

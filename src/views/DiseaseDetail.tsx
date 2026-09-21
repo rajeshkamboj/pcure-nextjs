@@ -87,7 +87,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-editorial font-bold text-[#14261B] tracking-tight leading-[1.15] mb-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[#14261B] tracking-tight leading-[1.15] mb-2">
             {disease.name}
           </h1>
 
@@ -114,7 +114,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
                   <span>Medically Reviewed by {disease.reviewedBy.name}</span>
                   <ShieldCheck size={15} className="text-[#1E4D30]" />
                 </div>
-                <div className="text-[11px] text-[#6e7d72]">{disease.reviewedBy.credentials} • {disease.reviewedBy.role}</div>
+                <div className="text-xs text-[#6e7d72]">{disease.reviewedBy.credentials} • {disease.reviewedBy.role}</div>
               </div>
             </div>
 
@@ -197,7 +197,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
                   <span className="text-[#6d7c71] block">Tissues Involved (Dhatus):</span>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {disease.ayurvedicPerspective.dhatusAffected.map((dhatu, i) => (
-                      <span key={i} className="px-2 py-0.5 rounded bg-white border border-[#ded5c5] text-[11px] text-[#2c3d30] font-medium">
+                      <span key={i} className="px-2 py-0.5 rounded bg-white border border-[#ded5c5] text-xs text-[#2c3d30] font-medium">
                         {dhatu}
                       </span>
                     ))}
@@ -221,7 +221,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
                     <RemoteImage src={herb.featuredImage} alt={herb.commonName} width={40} height={40} className="w-10 h-10 rounded-full object-cover shrink-0" />
                     <div>
                       <div className="text-xs font-bold text-[#1a281e] hover:text-[#1E4D30]">{herb.commonName}</div>
-                      <div className="text-[11px] font-serif italic text-[#8B6B3E]">{herb.sanskritName}</div>
+                      <div className="text-xs font-serif italic text-[#8B6B3E]">{herb.sanskritName}</div>
                     </div>
                   </Link>
                 ))}
@@ -235,7 +235,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 1. Overview */}
             <section id="sec-overview" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 1. Clinical Overview & Definition
               </h2>
               <div className="text-sm sm:text-base text-[#38463c] leading-relaxed space-y-4">
@@ -245,7 +245,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 2. Ayurvedic Perspective (Samprapti & Nidana) */}
             <section id="sec-ayurveda" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 2. Ayurvedic Perspective (Samprapti & Nidana)
               </h2>
               <div className="space-y-5 text-sm sm:text-base text-[#38463c]">
@@ -276,14 +276,14 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 3. Symptoms & Warning Signs */}
             <section id="sec-symptoms" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 3. Symptoms & Warning Signs
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Classical Symptoms */}
                 <div className="bg-[#FAF7F0] p-4 sm:p-5 rounded-lg border border-[#e6decf]">
-                  <h3 className="font-editorial font-bold text-base text-[#1b2b1e] mb-3">
+                  <h3 className="font-editorial font-bold text-lg text-[#1b2b1e] mb-3">
                     Classical Signs (Rupa / Lakshana)
                   </h3>
                   <ul className="space-y-2 text-xs sm:text-sm text-[#48564a]">
@@ -298,7 +298,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
                 {/* Modern Manifestation */}
                 <div className="bg-[#F8F9F8] p-4 sm:p-5 rounded-lg border border-[#dfe8e1]">
-                  <h3 className="font-editorial font-bold text-base text-[#1b2b1e] mb-3">
+                  <h3 className="font-editorial font-bold text-lg text-[#1b2b1e] mb-3">
                     Modern Clinical Presentation
                   </h3>
                   <ul className="space-y-2 text-xs sm:text-sm text-[#48564a]">
@@ -331,7 +331,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 4. Causes */}
             <section id="sec-causes" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 4. Primary Etiological Causes (Hetu)
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
@@ -346,7 +346,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 5. Diet & Lifestyle (Pathya / Apathya) */}
             <section id="sec-diet" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 5. Diet & Lifestyle Protocols (Pathya & Apathya)
               </h2>
               <p className="text-xs sm:text-sm text-[#546257] mb-6">
@@ -389,12 +389,12 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
               {/* Yoga & Pranayama */}
               <div className="bg-[#FAF7F0] p-5 rounded-lg border border-[#e6ded0]">
-                <h3 className="font-editorial font-bold text-base text-[#192b1e] mb-2">
+                <h3 className="font-editorial font-bold text-lg text-[#192b1e] mb-2">
                   Therapeutic Yoga, Pranayama & Lifestyle
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
-                    <h4 className="font-semibold text-[#8B6B3E] uppercase text-[11px] mb-2">Daily Habits (Vihara)</h4>
+                    <h4 className="font-semibold text-[#8B6B3E] uppercase text-xs mb-2">Daily Habits (Vihara)</h4>
                     <ul className="space-y-1.5 text-[#445247]">
                       {disease.dietAndLifestyle.lifestyleTips.map((tip, i) => (
                         <li key={i} className="flex items-start gap-1.5">
@@ -406,7 +406,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-[#1E4D30] uppercase text-[11px] mb-2">Yoga Asanas & Breathwork</h4>
+                    <h4 className="font-semibold text-[#1E4D30] uppercase text-xs mb-2">Yoga Asanas & Breathwork</h4>
                     <ul className="space-y-1.5 text-[#445247]">
                       {disease.dietAndLifestyle.yogaPranayama.map((yoga, i) => (
                         <li key={i} className="flex items-start gap-1.5">
@@ -425,7 +425,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
               <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#eee8dc]">
                 <div>
                   <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-wider">Traditional Formulations</span>
-                  <h2 className="text-2xl font-editorial font-bold text-[#14261B]">
+                  <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B]">
                     6. Verified Desi Nuskhe (Home Remedies)
                   </h2>
                 </div>
@@ -467,7 +467,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 7. Clinical Precautions */}
             <section id="sec-precautions" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 7. Important Clinical Precautions
               </h2>
               <ul className="space-y-2.5 text-xs sm:text-sm text-[#48564b]">
@@ -482,7 +482,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 8. FAQs */}
             <section id="sec-faqs" className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 8. Frequently Asked Questions
               </h2>
               <div className="space-y-3">
@@ -510,7 +510,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
             {/* 9. Classical References */}
             <section id="sec-references" className="bg-[#FAF7F0] rounded-xl border border-[#ded5c5] p-6 sm:p-8 scroll-mt-24">
-              <h2 className="text-lg font-editorial font-bold text-[#14261B] mb-3">
+              <h2 className="text-xl font-editorial font-bold text-[#14261B] mb-3">
                 9. Classical Samhita & Modern Citations
               </h2>
               <ul className="space-y-2 text-xs text-[#5f6f63]">

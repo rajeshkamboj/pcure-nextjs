@@ -61,7 +61,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
           )}
 
           {/* Title */}
-          <h1 className="max-w-4xl text-3xl sm:text-4xl md:text-5xl font-editorial font-bold text-[#14261B] leading-[1.15] tracking-tight">
+          <h1 className="max-w-4xl text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[#14261B] leading-[1.15] tracking-tight">
             {article.title}
           </h1>
 

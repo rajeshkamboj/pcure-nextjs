@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
+/* type-scale */
+@theme {
+  /* Smallest text on the site: 13px (was 12px, plus several 10-11px labels) */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.5;
+  /* Secondary body text: 15px (was 14px) */
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.55;
+}
+
+
 @layer base {
   :root {
-    --font-serif: var(--font-playfair), Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-serif: var(--font-heading), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-sans: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 

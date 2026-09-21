@@ -144,7 +144,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
 
             {/* Ayurvedic Pharmacodynamics Card (Pancha Mahabhuta / Dravyaguna) */}
             <div className="bg-white rounded-xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs">
-              <h2 className="font-editorial font-bold text-lg text-[#16271a] mb-4 pb-2 border-b border-[#eee8dc] flex items-center gap-2">
+              <h2 className="font-editorial font-bold text-xl text-[#16271a] mb-4 pb-2 border-b border-[#eee8dc] flex items-center gap-2">
                 <Leaf size={16} className="text-[#1E4D30]" />
                 <span>Ayurvedic Energetics (Dravyaguna)</span>
               </h2>
@@ -186,7 +186,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
 
             {/* Classical Recommended Dosages */}
             <div className="bg-[#FAF7F0] rounded-xl border border-[#ded5c5] p-5 sm:p-6">
-              <h2 className="font-editorial font-bold text-lg text-[#16271a] mb-3 pb-2 border-b border-[#e2d9cb]">
+              <h2 className="font-editorial font-bold text-xl text-[#16271a] mb-3 pb-2 border-b border-[#e2d9cb]">
                 Standard Therapeutic Dosages
               </h2>
 
@@ -206,7 +206,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
 
             {/* Contraindications & Safety */}
             <div className="bg-white rounded-xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs">
-              <h2 className="font-editorial font-bold text-lg text-rose-900 mb-3 flex items-center gap-2">
+              <h2 className="font-editorial font-bold text-xl text-rose-900 mb-3 flex items-center gap-2">
                 <AlertTriangle size={18} className="text-rose-700" />
                 <span>Safety & Contraindications</span>
               </h2>
@@ -226,7 +226,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
 
             {/* Detailed Description */}
             <div className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs">
-              <h2 className="text-2xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
+              <h2 className="text-2xl sm:text-3xl font-editorial font-bold text-[#14261B] mb-4 pb-2 border-b border-[#eee8dc]">
                 Botanical Monograph & Clinical Profile
               </h2>
               <div className="text-sm sm:text-base text-[#39493d] leading-relaxed space-y-4">
@@ -278,7 +278,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
                     className="p-4 rounded-lg bg-[#FAF8F5] border border-[#e8e1d5] hover:border-[#1E4D30]/60 transition-all flex items-center justify-between gap-4"
                   >
                     <div>
-                      <div className="text-[11px] font-medium text-[#8B6B3E] uppercase">{remedy.hindiName || 'देसी नुस्खा'}</div>
+                      <div className="text-xs font-medium text-[#8B6B3E] uppercase">{remedy.hindiName || 'देसी नुस्खा'}</div>
                       <h4 className="font-editorial font-bold text-base text-[#1b2b1e] hover:text-[#1E4D30]">
                         {remedy.name}
                       </h4>
@@ -293,7 +293,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
             {/* Associated Disease Monographs */}
             {relatedDiseases.length > 0 && (
               <div className="bg-[#FAF7F0] rounded-xl border border-[#ded5c5] p-5 sm:p-6">
-                <h3 className="font-editorial font-bold text-base text-[#192b1e] mb-3">
+                <h3 className="font-editorial font-bold text-lg text-[#192b1e] mb-3">
                   Related Disease Pathologies
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -303,7 +303,7 @@ export const IngredientDetail: React.FC<IngredientDetailProps> = ({
                       href={`/diseases/${disease.slug}`}
                       className="p-3 rounded-lg bg-white border border-[#ded5c5] hover:border-[#1E4D30] transition-colors block"
                     >
-                      <div className="text-[10px] text-[#78887b] uppercase font-semibold">{disease.category}</div>
+                      <div className="text-xs text-[#78887b] uppercase font-semibold">{disease.category}</div>
                       <div className="text-xs font-bold text-[#1b2a1e] hover:text-[#1E4D30] truncate">{disease.name}</div>
                     </Link>
                   ))}
