@@ -119,23 +119,25 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-[#718074]">
-              <div className="flex items-center gap-1">
-                <Calendar size={14} />
-                <span>
-  Updated {new Date(disease.updatedAt).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })}
-</span>
-              </div>
-              <span>•</span>
-              <div className="flex items-center gap-1">
-                <Clock size={14} />
-                <span>{disease.readingTime}</span>
-              </div>
+            <div className="flex items-center gap-3 text-xs text-[#718074]">
+  <div className="flex min-w-0 flex-1 items-center gap-1">
+    <Calendar size={14} className="shrink-0" />
+    <span className="min-w-0">
+      Updated{" "}
+      {new Date(disease.updatedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })}
+    </span>
+  </div>
 
+  <span className="shrink-0">•</span>
+
+  <div className="flex shrink-0 items-center gap-1 whitespace-nowrap">
+    <Clock size={14} className="shrink-0" />
+    <span>{disease.readingTime}</span>
+  </div>
               <div className="flex items-center gap-1.5 pl-2 border-l border-[#e4dcce]">
                 <button
                   onClick={handleShare}
