@@ -35,8 +35,8 @@ export function HeroSearch() {
   return (
     <>
       <form onSubmit={handleHeroSearch} className="mb-5 max-w-xl" role="search">
-        <div className="relative flex items-center shadow-sm rounded-lg bg-white border border-[#D5CDBD] p-1.5 focus-within:border-[#1E4D30] focus-within:ring-2 focus-within:ring-[#1E4D30]/15 transition-all">
-          <div className="pl-3 pr-2 text-[#7c8b7f]">
+        <div className="relative flex items-center shadow-sm rounded-lg bg-white border border-[#D5CDBD] p-1.5 focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/15 transition-all">
+          <div className="pl-3 pr-2 text-[var(--color-muted)]">
             <Search size={20} />
           </div>
           <input
@@ -45,11 +45,11 @@ export function HeroSearch() {
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search symptoms, remedies (e.g. Acidity, Golden Milk, Tulsi)..."
             aria-label="Search symptoms, remedies and herbs"
-            className="w-full bg-transparent text-sm sm:text-base text-[#1c2c20] placeholder-[#8f9b91] focus:outline-none py-2"
+            className="w-full bg-transparent text-sm sm:text-base text-[#1c2c20] placeholder-[var(--color-muted)] focus:outline-none py-2"
           />
           <button
             type="submit"
-            className="bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-md transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-md transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
           >
             <span>Search</span>
             <ArrowRight size={15} />
@@ -68,7 +68,7 @@ export function HeroSearch() {
               setSearchInput(clean);
               onSearchSubmit(clean);
             }}
-            className="px-2.5 py-1 rounded bg-[#EAE3D5]/70 hover:bg-[#ded5c5] text-[#2c3d31] transition-colors cursor-pointer border border-[#ded5c5]"
+            className="px-2.5 py-1 rounded bg-[var(--color-border)]/70 hover:bg-[var(--color-border)] text-[#2c3d31] transition-colors cursor-pointer border border-[var(--color-border)]"
           >
             {term}
           </button>

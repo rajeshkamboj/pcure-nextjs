@@ -7,67 +7,67 @@ import { RemoteImage } from '@/components/ui/RemoteImage';
 /** Server component: static content, no client JS (and the mock data stays out of the browser bundle). */
 export const About: React.FC = () => {
   return (
-    <div className="bg-[#FAF8F5] min-h-screen py-10 sm:py-16">
+    <div className="bg-[var(--color-bg)] min-h-screen py-10 sm:py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         {/* Breadcrumb Navigation */}
-        <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
-          <Link href="/" className="hover:text-[#1E4D30]">Home</Link>
+        <div className="mb-6 flex items-center gap-2 text-xs text-[var(--color-muted)]">
+          <Link href="/" className="hover:text-[var(--color-primary)]">Home</Link>
           <span>/</span>
-          <span className="text-[#1a281e] font-medium">About PatientScure</span>
+          <span className="text-[var(--color-ink)] font-medium">About PatientScure</span>
         </div>
 
         {/* Hero Banner */}
-        <div className="border-b border-[#ded5c5] pb-8 mb-10 text-center sm:text-left">
-          <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-widest">
+        <div className="border-b border-[var(--color-border)] pb-8 mb-10 text-center sm:text-left">
+          <span className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-widest">
             Our Purpose & Ethos
           </span>
-          <h1 className="text-3xl sm:text-4xl font-editorial font-bold text-[#14261B] mt-2 mb-4 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-editorial font-bold text-[var(--color-ink)] mt-2 mb-4 leading-tight">
             Restoring Authentic Classical Ayurveda to Modern Public Health
           </h1>
-          <p className="text-base sm:text-lg text-[#4d5c50] leading-relaxed">
+          <p className="text-base sm:text-lg text-[var(--color-muted)] leading-relaxed">
             PatientScure was founded to counter commercial dilution, pseudo-scientific claims, and oversimplified wellness fads. We present rigorous, classical Ayurvedic medicine derived directly from the Brihat Trayi Samhitas, reviewed by accredited Ayurvedic clinicians.
           </p>
         </div>
 
         {/* 3 Pillars Card */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-xl border border-[#ded5c5] p-6 shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center mb-4">
+          <div className="bg-white rounded-xl border border-[var(--color-border)] p-6 shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-[var(--color-border)] text-[var(--color-primary)] flex items-center justify-center mb-4">
               <BookOpen size={20} />
             </div>
-            <h3 className="font-editorial font-bold text-lg text-[#16271b] mb-2">Classical Textual Rigor</h3>
-            <p className="text-xs sm:text-sm text-[#4d5c50] leading-relaxed">
+            <h3 className="font-editorial font-bold text-lg text-[var(--color-ink)] mb-2">Classical Textual Rigor</h3>
+            <p className="text-xs sm:text-sm text-[var(--color-muted)] leading-relaxed">
               Every pathological mechanism (Samprapti) and dietary rule (Pathya-Apathya) is anchored in foundational scriptures: Charaka, Sushruta, and Ashtanga Hridaya.
             </p>
           </div>
 
-          <div className="bg-white rounded-xl border border-[#ded5c5] p-6 shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center mb-4">
+          <div className="bg-white rounded-xl border border-[var(--color-border)] p-6 shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-[var(--color-border)] text-[var(--color-primary)] flex items-center justify-center mb-4">
               <ShieldCheck size={20} />
             </div>
-            <h3 className="font-editorial font-bold text-lg text-[#16271b] mb-2">Vaidya Peer Review</h3>
-            <p className="text-xs sm:text-sm text-[#4d5c50] leading-relaxed">
+            <h3 className="font-editorial font-bold text-lg text-[var(--color-ink)] mb-2">Vaidya Peer Review</h3>
+            <p className="text-xs sm:text-sm text-[var(--color-muted)] leading-relaxed">
               All therapeutic recipes and herbal monographs undergo clinical verification by BAMS and MD (Ayurveda) doctors to ensure safety, accurate dosage, and contraindication notices.
             </p>
           </div>
 
-          <div className="bg-white rounded-xl border border-[#ded5c5] p-6 shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#EAF2ED] text-[#1E4D30] flex items-center justify-center mb-4">
+          <div className="bg-white rounded-xl border border-[var(--color-border)] p-6 shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-[var(--color-border)] text-[var(--color-primary)] flex items-center justify-center mb-4">
               <HeartPulse size={20} />
             </div>
-            <h3 className="font-editorial font-bold text-lg text-[#16271b] mb-2">Modern Safety Standards</h3>
-            <p className="text-xs sm:text-sm text-[#4d5c50] leading-relaxed">
+            <h3 className="font-editorial font-bold text-lg text-[var(--color-ink)] mb-2">Modern Safety Standards</h3>
+            <p className="text-xs sm:text-sm text-[var(--color-muted)] leading-relaxed">
               We explicitly identify 'red flag' emergency symptoms and advise readers when classical home remedies must yield to modern diagnostic emergency care.
             </p>
           </div>
         </div>
 
         {/* Editorial Board Section */}
-        <div className="bg-white rounded-xl border border-[#ded5c5] p-6 sm:p-8 mb-12 shadow-xs">
+        <div className="bg-white rounded-xl border border-[var(--color-border)] p-6 sm:p-8 mb-12 shadow-xs">
           <div className="flex items-center gap-2 mb-2">
-            <Users size={18} className="text-[#1E4D30]" />
-            <h2 className="text-xl font-editorial font-bold text-[#14261B]">
+            <Users size={18} className="text-[var(--color-primary)]" />
+            <h2 className="text-xl font-editorial font-bold text-[var(--color-ink)]">
               Our Editorial & Clinical Board
             </h2>
           </div>
@@ -77,18 +77,18 @@ export const About: React.FC = () => {
 
           <div className="space-y-6">
             {Object.values(AUTHORS).map((author) => (
-              <div key={author.id} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-4 rounded-lg bg-[#FAF8F5] border border-[#e8e0d2]">
+              <div key={author.id} className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-4 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)]">
                 <RemoteImage
                   src={author.avatarUrl}
                   alt={author.name}
                   width={64}
                   height={64}
-                  className="w-16 h-16 rounded-full object-cover border border-[#ded5c5] shrink-0"
+                  className="w-16 h-16 rounded-full object-cover border border-[var(--color-border)] shrink-0"
                 />
                 <div className="text-center sm:text-left">
-                  <h3 className="font-editorial font-bold text-lg text-[#16271b]">{author.name}</h3>
-                  <div className="text-xs font-semibold text-[#8B6B3E] mb-1">{author.credentials}</div>
-                  <div className="text-xs text-[#1E4D30] font-medium mb-2">{author.role}</div>
+                  <h3 className="font-editorial font-bold text-lg text-[var(--color-ink)]">{author.name}</h3>
+                  <div className="text-xs font-semibold text-[var(--color-accent)] mb-1">{author.credentials}</div>
+                  <div className="text-xs text-[var(--color-primary)] font-medium mb-2">{author.role}</div>
                   <p className="text-xs text-[#4f5f52] leading-relaxed">
                     Over 15+ years of clinical consultation and classical pharmacognosy practice, dedicated to providing ethical, unbiased health information.
                   </p>

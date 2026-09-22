@@ -38,17 +38,17 @@ export const Articles: React.FC<ArticlesProps> = ({
   );
 
   return (
-    <div className="bg-[#FAF7F0] min-h-screen">
+    <div className="bg-[var(--color-bg)] min-h-screen">
 
       {/* Header */}
-      <section className="bg-white border-b border-[#e5dfd3]">
+      <section className="bg-white border-b border-[var(--color-border)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
 
-          <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-widest">
+          <span className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-widest">
             Editorial Journal
           </span>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[#14261B] mt-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[var(--color-ink)] mt-2">
             Ayurvedic Insights for Contemporary Living
           </h1>
 
@@ -65,19 +65,19 @@ export const Articles: React.FC<ArticlesProps> = ({
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
 
         {articles.length === 0 && (
-          <div className="bg-white border border-[#e5dfd3] rounded-lg p-12 text-center">
-            <h2 className="font-editorial text-xl font-bold text-[#14261B]">
+          <div className="bg-white border border-[var(--color-border)] rounded-lg p-12 text-center">
+            <h2 className="font-editorial text-xl font-bold text-[var(--color-ink)]">
               No articles found
             </h2>
 
-            <p className="text-sm text-[#718074] mt-2">
+            <p className="text-sm text-[var(--color-muted)] mt-2">
               There are no articles available on this page.
             </p>
 
             {currentPage > 1 && (
               <Link
                 href="/articles"
-                className="mt-5 inline-block text-sm font-semibold text-[#1E4D30]"
+                className="mt-5 inline-block text-sm font-semibold text-[var(--color-primary)]"
               >
                 Return to page 1
               </Link>
@@ -89,13 +89,13 @@ export const Articles: React.FC<ArticlesProps> = ({
           <>
             {/* Results information */}
             <div className="flex items-center justify-between mb-7">
-              <p className="text-xs sm:text-sm text-[#718074]">
+              <p className="text-xs sm:text-sm text-[var(--color-muted)]">
                 Showing{' '}
-                <span className="font-semibold text-[#39483e]">
+                <span className="font-semibold text-[var(--color-muted)]">
                   {startItem}–{endItem}
                 </span>{' '}
                 of{' '}
-                <span className="font-semibold text-[#39483e]">
+                <span className="font-semibold text-[var(--color-muted)]">
                   {totalArticles}
                 </span>{' '}
                 articles
@@ -103,7 +103,7 @@ export const Articles: React.FC<ArticlesProps> = ({
 
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-[#1E4D30] hover:text-[#8B6B3E]"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-accent)]"
               >
                 <ArrowLeft size={14} />
                 Back to Home
@@ -117,7 +117,7 @@ export const Articles: React.FC<ArticlesProps> = ({
                 <Link
                   key={article.id}
                   href={`/articles/${article.slug}`}
-                  className="group bg-white border border-[#e5dfd3] rounded-lg overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300"
+                  className="group bg-white border border-[var(--color-border)] rounded-lg overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300"
                 >
 
                   <div className="h-52 overflow-hidden relative">
@@ -134,8 +134,8 @@ export const Articles: React.FC<ArticlesProps> = ({
 
                   <div className="p-5 flex flex-col flex-1">
 
-                    <div className="flex items-center gap-2 text-xs text-[#718074] mb-3">
-                      <span className="font-semibold text-[#8B6B3E] uppercase tracking-wide">
+                    <div className="flex items-center gap-2 text-xs text-[var(--color-muted)] mb-3">
+                      <span className="font-semibold text-[var(--color-accent)] uppercase tracking-wide">
                         {article.category}
                       </span>
 
@@ -147,7 +147,7 @@ export const Articles: React.FC<ArticlesProps> = ({
                       </span>
                     </div>
 
-                    <h2 className="text-xl font-editorial font-bold text-[#18291d] group-hover:text-[#1E4D30] transition-colors leading-snug">
+                    <h2 className="text-xl font-editorial font-bold text-[#18291d] group-hover:text-[var(--color-primary)] transition-colors leading-snug">
                       {article.title}
                     </h2>
 
@@ -157,7 +157,7 @@ export const Articles: React.FC<ArticlesProps> = ({
 
                     <div className="mt-auto pt-5">
 
-                      <div className="flex items-center gap-2.5 border-t border-[#f0ebd5] pt-4">
+                      <div className="flex items-center gap-2.5 border-t border-[var(--color-border)] pt-4">
 
                         {article.author.avatarUrl ? (
                           <RemoteImage
@@ -202,12 +202,12 @@ export const Articles: React.FC<ArticlesProps> = ({
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-5 mt-12 pt-7 border-t border-[#e5dfd3]">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-5 mt-12 pt-7 border-t border-[var(--color-border)]">
 
                 {currentPage === 1 ? (
                   <span
                     aria-disabled="true"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] opacity-40 cursor-not-allowed"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] rounded-md text-sm font-semibold text-[var(--color-muted)] opacity-40 cursor-not-allowed"
                   >
                     <ArrowLeft size={15} />
                     Previous
@@ -216,7 +216,7 @@ export const Articles: React.FC<ArticlesProps> = ({
                   <Link
                     href={pageHref(currentPage - 1)}
                     rel="prev"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] hover:bg-white transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] rounded-md text-sm font-semibold text-[var(--color-muted)] hover:bg-white transition-colors"
                   >
                     <ArrowLeft size={15} />
                     Previous
@@ -235,8 +235,8 @@ export const Articles: React.FC<ArticlesProps> = ({
                       aria-current={page === currentPage ? 'page' : undefined}
                       className={`w-9 h-9 inline-flex items-center justify-center rounded-md text-sm font-semibold transition-colors ${
                         page === currentPage
-                          ? 'bg-[#1E4D30] text-white'
-                          : 'text-[#39483e] hover:bg-white border border-transparent hover:border-[#d9d2c4]'
+                          ? 'bg-[var(--color-primary)] text-white'
+                          : 'text-[var(--color-muted)] hover:bg-white border border-transparent hover:border-[var(--color-border)]'
                       }`}
                     >
                       {page}
@@ -248,7 +248,7 @@ export const Articles: React.FC<ArticlesProps> = ({
                 {currentPage === totalPages ? (
                   <span
                     aria-disabled="true"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] opacity-40 cursor-not-allowed"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] rounded-md text-sm font-semibold text-[var(--color-muted)] opacity-40 cursor-not-allowed"
                   >
                     Next
                     <ArrowRight size={15} />
@@ -257,7 +257,7 @@ export const Articles: React.FC<ArticlesProps> = ({
                   <Link
                     href={pageHref(currentPage + 1)}
                     rel="next"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d9d2c4] rounded-md text-sm font-semibold text-[#39483e] hover:bg-white transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] rounded-md text-sm font-semibold text-[var(--color-muted)] hover:bg-white transition-colors"
                   >
                     Next
                     <ArrowRight size={15} />

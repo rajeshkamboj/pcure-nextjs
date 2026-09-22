@@ -13,14 +13,48 @@
 
 @layer base {
   :root {
-    --font-serif: var(--font-heading), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    /*
+     * Brand color tokens. These four are overridden per-request by an inline
+     * <style> tag in layout.tsx, populated from the WordPress "Theme
+     * Settings" plugin. The values below are just the fallback used if that
+     * fetch fails (or during local dev with no WordPress running) — keep
+     * them in sync with the plugin's defaults.
+     */
+    --color-primary: #1E4D30;
+    --color-primary-dark: color-mix(in srgb, var(--color-primary) 80%, black);
+    --color-accent: #8B6B3E;
+    --color-bg: #FAF8F5;
+    --color-ink: #14261B;
+    /* Derived automatically so secondary text / borders always stay in
+       harmony with whatever primary/bg/ink are set to — not separate
+       dashboard fields. */
+    --color-muted: color-mix(in srgb, var(--color-ink) 55%, var(--color-bg));
+    --color-border: color-mix(in srgb, var(--color-ink) 12%, var(--color-bg));
+
+    --font-serif: var(--font-space-grotesk), Georgia, Cambria, 'Times New Roman', Times, serif;
     --font-sans: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+    /*
+     * Long-form WP content typography — shared by the article body AND the
+     * WYSIWYG "Overview"/"Full Description" fields on Disease/Ingredient
+     * pages (see .patientscure-rich-content below). Overridden per-request
+     * from the WordPress "Theme Settings" plugin, same as the color tokens
+     * above — these are just the fallback defaults.
+     */
+    --content-body-size: 18px;
+    --content-body-lh: 1.85;
+    --content-h1-size: 42px;
+    --content-h1-lh: 1.15;
+    --content-h2-size: 32px;
+    --content-h2-lh: 1.2;
+    --content-h3-size: 24px;
+    --content-h3-lh: 1.3;
   }
 
   body {
     font-family: var(--font-sans);
-    color: #242a24;
-    background-color: #faf8f5;
+    color: var(--color-ink);
+    background-color: var(--color-bg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -36,8 +70,8 @@ html {
 }
 
 ::selection {
-  background-color: #d1e2d4;
-  color: #173824;
+  background-color: color-mix(in srgb, var(--color-primary) 25%, white);
+  color: var(--color-ink);
 }
 
 /* Hide horizontal scrollbar on mobile nav strip */
@@ -62,4 +96,300 @@ html {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/*
+ * Rendered WordPress rich-text (WYSIWYG) fields — the article body, plus
+ * the Disease "Overview" and Ingredient "Full Description" fields, which
+ * are ACF WYSIWYG Editor fields and need their saved HTML (bold, italic,
+ * links, lists, blockquotes, etc.) actually rendered, not printed as text.
+ * Applied via dangerouslySetInnerHTML in ArticleDetail.tsx, DiseaseDetail.tsx,
+ * and IngredientDetail.tsx.
+ *
+ * ArticleDetail.tsx additionally applies .patientscure-article-content
+ * alongside this class, which layers on the drop-cap/lead-paragraph
+ * treatment that only makes sense for a full article, not a compact card.
+ */
+.patientscure-rich-content {
+  color: var(--color-muted);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--content-body-size);
+  line-height: var(--content-body-lh);
+  letter-spacing: -0.005em;
+}
+
+.patientscure-rich-content p {
+  margin: 0 0 1.45em;
+}
+
+.patientscure-rich-content p:last-child {
+  margin-bottom: 0;
+}
+
+.patientscure-rich-content h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--content-h1-size);
+  line-height: var(--content-h1-lh);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.025em;
+  margin: 0 0 1.2em;
+}
+
+.patientscure-rich-content h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--content-h2-size);
+  line-height: var(--content-h2-lh);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 2.2em 0 0.75em;
+  letter-spacing: -0.02em;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.patientscure-rich-content h2::after {
+  content: "";
+  display: block;
+  width: 46px;
+  height: 2px;
+  background: var(--color-accent);
+  margin-top: 12px;
+}
+
+.patientscure-rich-content h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--content-h3-size);
+  line-height: var(--content-h3-lh);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 1.8em 0 0.65em;
+}
+
+.patientscure-rich-content h4 {
+  /* h4 isn't a WP-editable field — kept proportional to h3 instead
+     of its own dashboard setting, so it stays a visible step down. */
+  font-size: calc(var(--content-h3-size) * 0.792);
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 1.5em 0 0.5em;
+}
+
+.patientscure-rich-content h2:first-child,
+.patientscure-rich-content h3:first-child,
+.patientscure-rich-content h4:first-child {
+  margin-top: 0;
+}
+
+.patientscure-rich-content strong {
+  color: #18291d;
+  font-weight: 700;
+}
+
+.patientscure-rich-content em {
+  color: #536257;
+}
+
+.patientscure-rich-content a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(30, 77, 48, 0.3);
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
+}
+
+.patientscure-rich-content a:hover {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
+
+.patientscure-rich-content blockquote {
+  position: relative;
+  margin: 2.8em 0;
+  padding: 30px 34px 28px 42px;
+  background: #F3EFE6;
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 12px 12px 0;
+  color: var(--color-muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.patientscure-rich-content blockquote::before {
+  content: "“";
+  position: absolute;
+  left: 13px;
+  top: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--color-accent);
+  font-style: normal;
+  opacity: 0.65;
+}
+
+.patientscure-rich-content blockquote p {
+  margin: 0 0 12px;
+}
+
+.patientscure-rich-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.patientscure-rich-content blockquote strong {
+  color: var(--color-primary);
+}
+
+.patientscure-rich-content blockquote cite {
+  display: block;
+  margin-top: 14px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.patientscure-rich-content ul,
+.patientscure-rich-content ol {
+  margin: 1.4em 0 1.7em;
+  padding-left: 1.7em;
+}
+
+.patientscure-rich-content li {
+  margin: 0.55em 0;
+  padding-left: 0.35em;
+}
+
+.patientscure-rich-content ul li::marker {
+  color: var(--color-accent);
+}
+
+.patientscure-rich-content ol li::marker {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.patientscure-rich-content hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 3em 0;
+}
+
+.patientscure-rich-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2.5em auto;
+  border-radius: 12px;
+}
+
+.patientscure-rich-content figure {
+  margin: 2.5em 0;
+}
+
+.patientscure-rich-content figure img {
+  margin: 0 auto;
+}
+
+.patientscure-rich-content figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.patientscure-rich-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5em 0;
+  font-size: 15px;
+  line-height: 1.6;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.patientscure-rich-content th {
+  padding: 13px 15px;
+  background: #F3EFE6;
+  color: var(--color-ink);
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 1px solid #DDD5C7;
+}
+
+.patientscure-rich-content td {
+  padding: 13px 15px;
+  border-bottom: 1px solid #EEE9E0;
+}
+
+.patientscure-rich-content tr:last-child td {
+  border-bottom: 0;
+}
+
+.patientscure-rich-content code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #F0ECE3;
+  color: var(--color-primary);
+  font-size: 0.9em;
+}
+
+.patientscure-rich-content h2 + p,
+.patientscure-rich-content h3 + p {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  /*
+    Mobile sizes stay proportional to the desktop var()s above (same
+    ratios as the original fixed px values) rather than their own
+    dashboard fields — keeps the WP settings page to one set of
+    numbers per element instead of a desktop/mobile pair for each.
+  */
+  .patientscure-rich-content {
+    font-size: calc(var(--content-body-size) * 0.944);
+    line-height: calc(var(--content-body-lh) * 0.973);
+  }
+
+  .patientscure-rich-content h1 {
+    font-size: calc(var(--content-h1-size) * 0.762);
+    line-height: 1.2;
+    margin-bottom: 1em;
+  }
+
+  .patientscure-rich-content h2 {
+    font-size: calc(var(--content-h2-size) * 0.844);
+    margin-top: 1.9em;
+  }
+
+  .patientscure-rich-content h3 {
+    font-size: calc(var(--content-h3-size) * 0.917);
+  }
+
+  .patientscure-rich-content blockquote {
+    margin: 2.2em 0;
+    padding: 24px 22px 22px 34px;
+    font-size: 19px;
+  }
+
+  .patientscure-rich-content blockquote::before {
+    left: 9px;
+    font-size: 52px;
+  }
+
+  .patientscure-rich-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }

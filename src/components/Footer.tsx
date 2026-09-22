@@ -7,7 +7,7 @@ import { BackToTop } from "@/components/BackToTop";
 /** Server component: static links + one tiny client island (<BackToTop />). */
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#14261B] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
+    <footer className="bg-[var(--color-ink)] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#233f2d]">

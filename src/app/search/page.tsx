@@ -40,7 +40,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center p-8">Loading search...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--color-bg)] flex items-center justify-center p-8">Loading search...</div>}>
       <SearchContent />
     </Suspense>
   );
