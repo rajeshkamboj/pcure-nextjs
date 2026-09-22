@@ -2,12 +2,16 @@
 
 /* type-scale */
 @theme {
-  --text-xs: 0.8125rem;
+  /* Secondary/label text: 14px (was 12px, plus several 10-11px labels). */
+  /* Mobile screens are read close-up, so this is a floor, not scaled down further. */
+  --text-xs: 0.875rem;
   --text-xs--line-height: 1.5;
-  --text-sm: 0.9375rem;
-  --text-sm--line-height: 1.55;
+  /* Body text: 16px — same as text-base, so no *readable* copy sits below the 16px
+     minimum mobile guidelines recommend (sub-16px body text is what forces phones
+     to zoom in). text-xs stays for badges/dates/meta only. */
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.6;
 }
-
 @layer base {
   :root {
     --color-primary: #1E4D30;
