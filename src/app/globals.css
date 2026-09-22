@@ -2,45 +2,26 @@
 
 /* type-scale */
 @theme {
-  /* Smallest text on the site: 13px (was 12px, plus several 10-11px labels) */
   --text-xs: 0.8125rem;
   --text-xs--line-height: 1.5;
-  /* Secondary body text: 15px (was 14px) */
   --text-sm: 0.9375rem;
   --text-sm--line-height: 1.55;
 }
 
-
 @layer base {
   :root {
-    /*
-     * Brand color tokens. These four are overridden per-request by an inline
-     * <style> tag in layout.tsx, populated from the WordPress "Theme
-     * Settings" plugin. The values below are just the fallback used if that
-     * fetch fails (or during local dev with no WordPress running) — keep
-     * them in sync with the plugin's defaults.
-     */
     --color-primary: #1E4D30;
     --color-primary-dark: color-mix(in srgb, var(--color-primary) 80%, black);
     --color-accent: #8B6B3E;
     --color-bg: #FAF8F5;
     --color-ink: #14261B;
-    /* Derived automatically so secondary text / borders always stay in
-       harmony with whatever primary/bg/ink are set to — not separate
-       dashboard fields. */
     --color-muted: color-mix(in srgb, var(--color-ink) 55%, var(--color-bg));
     --color-border: color-mix(in srgb, var(--color-ink) 12%, var(--color-bg));
 
-    --font-serif: var(--font-space-grotesk), Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-sans: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    /* Typography: Next.js font variables supplied by layout.tsx */
+    --font-heading-family: var(--font-heading), system-ui, sans-serif;
+    --font-body-family: var(--font-jakarta), system-ui, sans-serif;
 
-    /*
-     * Long-form WP content typography — shared by the article body AND the
-     * WYSIWYG "Overview"/"Full Description" fields on Disease/Ingredient
-     * pages (see .patientscure-rich-content below). Overridden per-request
-     * from the WordPress "Theme Settings" plugin, same as the color tokens
-     * above — these are just the fallback defaults.
-     */
     --content-body-size: 18px;
     --content-body-lh: 1.85;
     --content-h1-size: 42px;
@@ -52,7 +33,7 @@
   }
 
   body {
-    font-family: var(--font-sans);
+    font-family: var(--font-body-family);
     color: var(--color-ink);
     background-color: var(--color-bg);
     -webkit-font-smoothing: antialiased;
@@ -60,11 +41,10 @@
   }
 
   h1, h2, h3, .font-editorial {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading-family);
   }
 }
 
-/* Custom subtle scrollbar & helpers */
 html {
   scroll-behavior: smooth;
 }
@@ -74,16 +54,15 @@ html {
   color: var(--color-ink);
 }
 
-/* Hide horizontal scrollbar on mobile nav strip */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Typography line clamp utils */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -99,20 +78,11 @@ html {
 }
 
 /*
- * Rendered WordPress rich-text (WYSIWYG) fields — the article body, plus
- * the Disease "Overview" and Ingredient "Full Description" fields, which
- * are ACF WYSIWYG Editor fields and need their saved HTML (bold, italic,
- * links, lists, blockquotes, etc.) actually rendered, not printed as text.
- * Applied via dangerouslySetInnerHTML in ArticleDetail.tsx, DiseaseDetail.tsx,
- * and IngredientDetail.tsx.
- *
- * ArticleDetail.tsx additionally applies .patientscure-article-content
- * alongside this class, which layers on the drop-cap/lead-paragraph
- * treatment that only makes sense for a full article, not a compact card.
+ * Rendered WordPress rich-text (WYSIWYG) fields.
  */
 .patientscure-rich-content {
   color: var(--color-muted);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body-family);
   font-size: var(--content-body-size);
   line-height: var(--content-body-lh);
   letter-spacing: -0.005em;
@@ -127,7 +97,7 @@ html {
 }
 
 .patientscure-rich-content h1 {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading-family);
   font-size: var(--content-h1-size);
   line-height: var(--content-h1-lh);
   font-weight: 700;
@@ -137,7 +107,7 @@ html {
 }
 
 .patientscure-rich-content h2 {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading-family);
   font-size: var(--content-h2-size);
   line-height: var(--content-h2-lh);
   font-weight: 700;
@@ -158,7 +128,7 @@ html {
 }
 
 .patientscure-rich-content h3 {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading-family);
   font-size: var(--content-h3-size);
   line-height: var(--content-h3-lh);
   font-weight: 700;
@@ -167,8 +137,7 @@ html {
 }
 
 .patientscure-rich-content h4 {
-  /* h4 isn't a WP-editable field — kept proportional to h3 instead
-     of its own dashboard setting, so it stays a visible step down. */
+  font-family: var(--font-heading-family);
   font-size: calc(var(--content-h3-size) * 0.792);
   line-height: 1.4;
   font-weight: 700;
@@ -213,18 +182,18 @@ html {
   border-left: 4px solid var(--color-accent);
   border-radius: 0 12px 12px 0;
   color: var(--color-muted);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-body-family);
   font-size: 22px;
   line-height: 1.6;
   font-style: italic;
 }
 
 .patientscure-rich-content blockquote::before {
-  content: "“";
+  content: "\201C";
   position: absolute;
   left: 13px;
   top: 3px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-heading-family);
   font-size: 64px;
   line-height: 1;
   color: var(--color-accent);
@@ -247,7 +216,7 @@ html {
 .patientscure-rich-content blockquote cite {
   display: block;
   margin-top: 14px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body-family);
   font-size: 13px;
   line-height: 1.5;
   font-style: normal;
@@ -350,12 +319,6 @@ html {
 }
 
 @media (max-width: 640px) {
-  /*
-    Mobile sizes stay proportional to the desktop var()s above (same
-    ratios as the original fixed px values) rather than their own
-    dashboard fields — keeps the WP settings page to one set of
-    numbers per element instead of a desktop/mobile pair for each.
-  */
   .patientscure-rich-content {
     font-size: calc(var(--content-body-size) * 0.944);
     line-height: calc(var(--content-body-lh) * 0.973);

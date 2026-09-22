@@ -7,7 +7,7 @@ import { BackToTop } from "@/components/BackToTop";
 /** Server component: static links + one tiny client island (<BackToTop />). */
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[var(--color-ink)] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
+    <footer className="bg-[#14261B] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#233f2d]">
@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
               className="flex items-center gap-3 group"
             >
               <Image
-                src="/images/logo.webp"
+                src="/images/logo.png"
                 alt="PatientsCure"
                 width={420}
                 height={120}

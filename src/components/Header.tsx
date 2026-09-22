@@ -98,9 +98,9 @@ export const Header: React.FC = () => {
     (id === "ingredients" && effectiveCurrentPage === "ingredient-detail");
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--color-bg)]/95 backdrop-blur-md border-b border-[#E2DBD0]">
+    <header className="sticky top-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#E2DBD0]">
       {/* Editorial Top Ribbon */}
-      <div className="bg-[var(--color-ink)] text-[#E0E8E2] text-xs py-1.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
+      <div className="bg-[#14261B] text-[#E0E8E2] text-xs py-1.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
         <Sparkles size={12} className="text-[#8BB396] shrink-0" />
         <span className="truncate">
           Classical Brihat Trayi Ayurveda • Medically Reviewed by Licensed Vaidyas
@@ -116,7 +116,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-2.5 group shrink-0"
             >
               <Image
-                src="/images/logo.webp"
+                src="/images/logo.png"
                 alt="PatientsCure"
                 width={420}
                 height={120}
@@ -139,8 +139,8 @@ export const Header: React.FC = () => {
                 aria-current={isNavActive(link.id) ? "page" : undefined}
                 className={`whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-md transition-colors ${
                   isNavActive(link.id)
-                    ? "text-[var(--color-primary)] bg-[var(--color-border)] font-semibold"
-                    : "hover:text-[var(--color-primary)] hover:bg-[var(--color-bg)]"
+                    ? "text-[#1E4D30] bg-[#E8EFEA] font-semibold"
+                    : "hover:text-[#1E4D30] hover:bg-[#F2ECE1]"
                 }`}
               >
                 {link.label}
@@ -156,8 +156,8 @@ export const Header: React.FC = () => {
               aria-label="Open search"
               className={`hidden sm:flex items-center gap-2 pl-2.5 pr-3 py-2 rounded-lg border text-xs transition-colors cursor-pointer ${
                 searchOpen
-                  ? "bg-white border-[var(--color-primary)] text-[var(--color-primary)]"
-                  : "bg-[#F3EFE7] border-[#d8cfbe] text-[#4a5a4e] hover:border-[var(--color-primary)] hover:bg-white"
+                  ? "bg-white border-[#1E4D30] text-[#1E4D30]"
+                  : "bg-[#F3EFE7] border-[#d8cfbe] text-[#4a5a4e] hover:border-[#1E4D30] hover:bg-white"
               }`}
             >
               <Search size={15} />
@@ -167,7 +167,7 @@ export const Header: React.FC = () => {
             <Link
               href="/contact"
               prefetch={false}
-              className="hidden md:block bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors whitespace-nowrap"
+              className="hidden md:block bg-[#1E4D30] hover:bg-[#163a24] text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors whitespace-nowrap"
             >
               Consult Desk
             </Link>
@@ -205,8 +205,8 @@ export const Header: React.FC = () => {
               aria-current={isNavActive(link.id) ? "page" : undefined}
               className={`whitespace-nowrap px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                 isNavActive(link.id)
-                  ? "text-[var(--color-primary)] bg-[var(--color-border)] font-semibold"
-                  : "text-[#2d3a30] hover:bg-[var(--color-bg)]"
+                  ? "text-[#1E4D30] bg-[#E8EFEA] font-semibold"
+                  : "text-[#2d3a30] hover:bg-[#F2ECE1]"
               }`}
             >
               {link.label}
@@ -217,10 +217,10 @@ export const Header: React.FC = () => {
 
       {/* Expanding Search Panel */}
       {searchOpen && (
-        <div className="absolute left-0 right-0 top-full bg-[var(--color-bg)] border-b border-[var(--color-border)] shadow-lg shadow-[var(--color-ink)]/5">
+        <div className="absolute left-0 right-0 top-full bg-[#FAF8F5] border-b border-[#DED5C5] shadow-lg shadow-[#14261B]/5">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 py-5">
             <form onSubmit={handleSearch} className="flex items-center gap-2">
-              <div className="flex-1 flex items-center rounded-lg bg-white border border-[#D5CDBD] px-3 py-2.5 focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/15 transition-all">
+              <div className="flex-1 flex items-center rounded-lg bg-white border border-[#D5CDBD] px-3 py-2.5 focus-within:border-[#1E4D30] focus-within:ring-2 focus-within:ring-[#1E4D30]/15 transition-all">
                 <Search size={18} className="text-[#7d8b7f] mr-2.5 shrink-0" />
                 <input
                   ref={searchInputRef}
@@ -228,12 +228,12 @@ export const Header: React.FC = () => {
                   value={headerSearch}
                   onChange={(e) => setHeaderSearch(e.target.value)}
                   placeholder="Search diseases, desi nuskhe, herbs or symptoms…"
-                  className="w-full bg-transparent text-sm text-[#1c2c20] placeholder-[var(--color-muted)] focus:outline-none"
+                  className="w-full bg-transparent text-sm text-[#1c2c20] placeholder-[#8f9b91] focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setSearchOpen(false)}
-                  className="ml-2 p-1 rounded text-[#7d8b7f] hover:text-[var(--color-ink)] hover:bg-[var(--color-bg)] cursor-pointer"
+                  className="ml-2 p-1 rounded text-[#7d8b7f] hover:text-[#14261B] hover:bg-[#F2ECE1] cursor-pointer"
                   aria-label="Close search"
                 >
                   <X size={16} />
@@ -241,7 +241,7 @@ export const Header: React.FC = () => {
               </div>
               <button
                 type="submit"
-                className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white text-sm font-semibold px-4 py-3 rounded-lg transition-colors cursor-pointer whitespace-nowrap"
+                className="bg-[#1E4D30] hover:bg-[#163a24] text-white text-sm font-semibold px-4 py-3 rounded-lg transition-colors cursor-pointer whitespace-nowrap"
               >
                 Search
               </button>
@@ -249,21 +249,21 @@ export const Header: React.FC = () => {
 
             {/* Popular searches inside panel */}
             <div className="flex flex-wrap items-center gap-2 mt-4 text-xs">
-              <span className="text-[var(--color-muted)] font-medium">Trending:</span>
+              <span className="text-[#6d7c71] font-medium">Trending:</span>
               {popularSearches.map((term) => (
                 <button
                   key={term}
                   type="button"
                   onClick={() => runSearch(term)}
-                  className="px-2.5 py-1 rounded-full bg-white border border-[var(--color-border)] text-[#3d4b40] hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-full bg-white border border-[#ded5c5] text-[#3d4b40] hover:bg-[#1E4D30] hover:text-white hover:border-[#1E4D30] transition-colors cursor-pointer"
                 >
                   {term}
                 </button>
               ))}
             </div>
 
-            <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#e9e2d5] text-xs text-[var(--color-muted)]">
-              <Sparkles size={12} className="text-[var(--color-accent)]" />
+            <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-[#e9e2d5] text-xs text-[#6d7c71]">
+              <Sparkles size={12} className="text-[#8B6B3E]" />
               <span>Searches span disease monographs, home remedies and the botanical library.</span>
               <ArrowRight size={12} />
             </div>
@@ -273,7 +273,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[var(--color-border)] bg-[var(--color-bg)] shadow-sm">
+        <div className="lg:hidden border-t border-[#e5dfd3] bg-[#FAF8F5] shadow-sm">
           <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -283,8 +283,8 @@ export const Header: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block w-full text-left px-3 py-2.5 rounded-md text-sm font-medium ${
                   isNavActive(link.id)
-                    ? "text-[var(--color-primary)] bg-[var(--color-border)] font-semibold"
-                    : "text-[#2d3a30] hover:bg-[var(--color-bg)]"
+                    ? "text-[#1E4D30] bg-[#E8EFEA] font-semibold"
+                    : "text-[#2d3a30] hover:bg-[#F2ECE1]"
                 }`}
               >
                 {link.label}
@@ -294,7 +294,7 @@ export const Header: React.FC = () => {
               href="/contact"
               prefetch={false}
               onClick={() => setMobileMenuOpen(false)}
-              className="block w-full text-center py-2.5 mt-1 bg-[var(--color-primary)] text-white text-xs font-semibold rounded-lg"
+              className="block w-full text-center py-2.5 mt-1 bg-[#1E4D30] text-white text-xs font-semibold rounded-lg"
             >
               Contact Editorial Desk
             </Link>

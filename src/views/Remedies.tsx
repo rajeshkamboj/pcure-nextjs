@@ -37,31 +37,31 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
   });
 
   return (
-    <div className="bg-[var(--color-bg)] min-h-screen py-10 sm:py-14">
+    <div className="bg-[#FAF8F5] min-h-screen py-10 sm:py-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Breadcrumb Header */}
-        <div className="mb-6 flex items-center gap-2 text-xs text-[var(--color-muted)]">
-          <Link href="/" className="hover:text-[var(--color-primary)]">Home</Link>
+        <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
+          <Link href="/" className="hover:text-[#1E4D30]">Home</Link>
           <span>/</span>
-          <span className="text-[var(--color-ink)] font-medium">Desi Nuskhe & Classical Remedies</span>
+          <span className="text-[#1a281e] font-medium">Desi Nuskhe & Classical Remedies</span>
         </div>
 
         {/* Section Heading */}
-        <div className="border-b border-[var(--color-border)] pb-8 mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-border)] text-[var(--color-accent)] text-xs font-semibold uppercase tracking-wider mb-2 border border-[var(--color-border)]">
+        <div className="border-b border-[#e2dbcf] pb-8 mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f3ede1] text-[#8B6B3E] text-xs font-semibold uppercase tracking-wider mb-2 border border-[#ded5c5]">
             <Sparkles size={12} />
             Kitchen Apothecary & Herbal Decoctions
           </div>
-          <h1 className="text-3xl sm:text-4xl font-editorial font-bold text-[var(--color-ink)] mt-2 mb-3">
+          <h1 className="text-3xl sm:text-4xl font-editorial font-bold text-[#14261B] mt-2 mb-3">
             Classical Desi Nuskhe (Home Remedies Library)
           </h1>
-          <p className="text-sm sm:text-base text-[var(--color-muted)] max-w-3xl leading-relaxed">
+          <p className="text-sm sm:text-base text-[#4d5c50] max-w-3xl leading-relaxed">
             Time-tested, accessible recipes formulated from unadulterated spices, medicinal roots, and herbal decoctions. Each formulation details specific preparation methods, ideal ingestion timing (Anupana), target dosha, and contraindications.
           </p>
         </div>
 
         {/* Search & Filter Toolbar */}
-        <div className="bg-white rounded-xl border border-[var(--color-border)] p-4 sm:p-5 mb-8 shadow-xs">
+        <div className="bg-white rounded-xl border border-[#ded5c5] p-4 sm:p-5 mb-8 shadow-xs">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
             {/* Search Input */}
             <div className="md:col-span-6 relative">
@@ -73,7 +73,7 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search remedies (e.g., Haldi Doodh, Kashayam, Insomnia, Acidity)..."
-                className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-ink)] placeholder-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]"
+                className="w-full pl-10 pr-4 py-2.5 bg-[#FAF8F5] border border-[#d8d0c2] rounded-lg text-sm text-[#192b1e] placeholder-[#8f9b91] focus:outline-none focus:border-[#1E4D30] focus:ring-1 focus:ring-[#1E4D30]"
               />
             </div>
 
@@ -82,7 +82,7 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
               <select
                 value={selectedDosha}
                 onChange={(e) => setSelectedDosha(e.target.value)}
-                className="w-full py-2.5 px-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-primary)] cursor-pointer"
+                className="w-full py-2.5 px-3 bg-[#FAF8F5] border border-[#d8d0c2] rounded-lg text-sm text-[#192b1e] focus:outline-none focus:border-[#1E4D30] cursor-pointer"
               >
                 {doshaFilters.map((d) => (
                   <option key={d} value={d}>
@@ -97,7 +97,7 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="w-full py-2.5 px-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-primary)] cursor-pointer"
+                className="w-full py-2.5 px-3 bg-[#FAF8F5] border border-[#d8d0c2] rounded-lg text-sm text-[#192b1e] focus:outline-none focus:border-[#1E4D30] cursor-pointer"
               >
                 {difficultyFilters.map((diff) => (
                   <option key={diff} value={diff}>
@@ -109,13 +109,13 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
           </div>
 
           {/* Quick Tags Bar */}
-          <div className="flex flex-wrap items-center gap-1.5 pt-4 mt-4 border-t border-[var(--color-border)] text-xs">
-            <span className="text-[var(--color-muted)] font-medium mr-1">Popular Targets:</span>
+          <div className="flex flex-wrap items-center gap-1.5 pt-4 mt-4 border-t border-[#f0ebd5] text-xs">
+            <span className="text-[#6d7c71] font-medium mr-1">Popular Targets:</span>
             {['Acidity', 'Joint Pain', 'Sleep', 'Cough', 'Immunity', 'Bloating'].map((tag) => (
               <button
                 key={tag}
                 onClick={() => setSearchTerm(tag)}
-                className="px-2.5 py-0.5 rounded-full bg-[var(--color-bg)] hover:bg-[var(--color-border)] text-[#3e4d41] border border-[var(--color-border)] cursor-pointer transition-colors"
+                className="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] hover:bg-[#eae3d5] text-[#3e4d41] border border-[#ded5c5] cursor-pointer transition-colors"
               >
                 {tag}
               </button>
@@ -133,7 +133,7 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
                 setSelectedDosha('All');
                 setSelectedDifficulty('All');
               }}
-              className="text-[var(--color-accent)] hover:underline cursor-pointer"
+              className="text-[#8B6B3E] hover:underline cursor-pointer"
             >
               Clear filters
             </button>
@@ -146,11 +146,11 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
             <Link
               key={remedy.id}
               href={`/remedies/${remedy.slug}`}
-              className="group bg-white rounded-xl border border-[var(--color-border)] overflow-hidden hover:shadow-md hover:border-[var(--color-primary)]/50 transition-all flex flex-col justify-between"
+              className="group bg-white rounded-xl border border-[#ded5c5] overflow-hidden hover:shadow-md hover:border-[#1E4D30]/50 transition-all flex flex-col justify-between"
             >
               <div>
                 {/* Image */}
-                <div className="h-48 overflow-hidden relative border-b border-[var(--color-border)]">
+                <div className="h-48 overflow-hidden relative border-b border-[#eee7da]">
                   <RemoteImage
                     src={remedy.featuredImage}
                     alt={remedy.name}
@@ -158,10 +158,10 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
                     sizes="(min-width: 1024px) 368px, (min-width: 768px) 50vw, 100vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded text-xs font-semibold text-[var(--color-primary)] shadow-xs">
+                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded text-xs font-semibold text-[#1E4D30] shadow-xs">
                     {remedy.hindiName || 'देसी नुस्खा'}
                   </div>
-                  <div className="absolute top-3 right-3 bg-[var(--color-ink)]/80 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
+                  <div className="absolute top-3 right-3 bg-[#14261B]/80 text-white px-2 py-0.5 rounded text-xs font-medium flex items-center gap-1">
                     <Clock size={12} />
                     <span>{remedy.prepTime}</span>
                   </div>
@@ -170,41 +170,41 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
                 {/* Content */}
                 <div className="p-5">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-wider flex items-center gap-1">
+                    <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-wider flex items-center gap-1">
                       <Droplets size={12} />
                       Balances {remedy.primaryDoshaBalancing}
                     </span>
-                    <span className="text-xs text-[#637267] bg-[var(--color-bg)] border border-[var(--color-border)] px-2 py-0.5 rounded">
+                    <span className="text-xs text-[#637267] bg-[#FAF8F5] border border-[#e8e1d5] px-2 py-0.5 rounded">
                       {remedy.difficulty}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-editorial font-bold text-[var(--color-ink)] group-hover:text-[var(--color-primary)] transition-colors leading-snug mb-2">
+                  <h3 className="text-lg font-editorial font-bold text-[#14261B] group-hover:text-[#1E4D30] transition-colors leading-snug mb-2">
                     {remedy.name}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-[var(--color-muted)] line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#4d5c50] line-clamp-2 leading-relaxed mb-4">
                     {remedy.purpose}
                   </p>
 
-                  <div className="bg-[var(--color-bg)] p-3 rounded-lg border border-[var(--color-border)] text-xs space-y-1.5 mb-2">
+                  <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#e8e0d2] text-xs space-y-1.5 mb-2">
                     <div className="flex items-start justify-between gap-2">
                       <span className="text-[#758478] shrink-0">Indication:</span>
-                      <span className="font-medium text-[var(--color-ink)] text-right line-clamp-1">{remedy.targetCondition}</span>
+                      <span className="font-medium text-[#223326] text-right line-clamp-1">{remedy.targetCondition}</span>
                     </div>
                     <div className="flex items-start justify-between gap-2">
                       <span className="text-[#758478] shrink-0">Carrier (Anupana):</span>
-                      <span className="font-medium text-[var(--color-ink)] text-right truncate">{remedy.howToUse.anupana}</span>
+                      <span className="font-medium text-[#223326] text-right truncate">{remedy.howToUse.anupana}</span>
                     </div>
                   </div>
                 </div>
                 
                 {/* Bottom Footer */}
                 <div className="px-5 pb-5 pt-2 border-t border-[#f2ede4] flex items-center justify-between text-xs">
-                  <span className="text-[var(--color-muted)]">
+                  <span className="text-[#718074]">
                     {remedy.ingredients.length} Ingredients
                   </span>
-                  <span className="text-[var(--color-primary)] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <span className="text-[#1E4D30] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                     <span>View Nuskha</span>
                     <ArrowRight size={14} />
                   </span>
@@ -216,4 +216,4 @@ export const Remedies: React.FC<RemediesProps> = ({ initialRemedies }) => {
       </div>
     </div>
   );
-};
+};

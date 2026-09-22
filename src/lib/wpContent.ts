@@ -1,11 +1,9 @@
 /**
- * Helpers for rendering raw HTML that comes from WordPress WYSIWYG
- * (rich text) fields — the article body, plus ACF WYSIWYG Editor fields
- * like Disease "Overview" and Ingredient "Full Description".
+ * Helpers for rendering raw HTML from WordPress WYSIWYG (rich text) fields
+ * — the article body, plus ACF WYSIWYG Editor fields like Disease "Overview"
+ * and Ingredient "Full Description".
  *
- * Pair with the `.patientscure-rich-content` class in globals.css, which
- * styles the paragraphs/headings/links/lists/blockquotes/tables this HTML
- * can contain.
+ * Pair with the `.patientscure-rich-content` class in globals.css.
  */
 
 /**

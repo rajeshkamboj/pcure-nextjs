@@ -9,11 +9,18 @@ import {
 import type { Article } from '../types';
 import { RemoteImage } from '@/components/ui/RemoteImage';
 import AdSense from "@/components/ads/AdSense";
-import { lazyLoadContentMedia } from '@/lib/wpContent';
 
 interface ArticleDetailProps {
   article: Article;
 }
+
+/**
+ * WordPress body HTML: make sure images/iframes inside the article are lazy-loaded
+ * (WordPress usually adds this already; this only fills in tags that lack it).
+ * The cover image above the fold is rendered separately with `priority`.
+ */
+const lazyLoadContentMedia = (html: string): string =>
+  html.replace(/<(img|iframe)\b(?![^>]*\sloading=)/gi, '<$1 loading="lazy"');
 
 /**
  * Server component: the article (title, body HTML, cover image) is rendered on
@@ -29,16 +36,16 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
     : '';
 
   return (
-    <div className="bg-[var(--color-bg)] min-h-screen">
+    <div className="bg-[#FAF8F5] min-h-screen">
 
       {/* Article Header */}
-      <section className="bg-white border-b border-[var(--color-border)]">
+      <section className="bg-white border-b border-[#e5dfd3]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 
           {/* Back */}
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-ink)] transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#1E4D30] hover:text-[#14261B] transition-colors mb-8"
           >
             <ArrowLeft size={16} />
             Back to Articles
@@ -47,26 +54,26 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
           {/* Category */}
           {article.category && (
             <div className="mb-4">
-              <span className="text-xs font-semibold text-[var(--color-accent)] uppercase tracking-widest">
+              <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-widest">
                 {article.category}
               </span>
             </div>
           )}
 
           {/* Title */}
-          <h1 className="max-w-4xl text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[var(--color-ink)] leading-[1.15] tracking-tight">
+          <h1 className="max-w-4xl text-3xl sm:text-4xl lg:text-5xl font-editorial font-bold text-[#14261B] leading-[1.15] tracking-tight">
             {article.title}
           </h1>
 
           {/* Summary */}
           {article.summary && (
-            <p className="max-w-3xl mt-5 text-base sm:text-lg text-[var(--color-muted)] leading-relaxed">
+            <p className="max-w-3xl mt-5 text-base sm:text-lg text-[#546257] leading-relaxed">
               {article.summary}
             </p>
           )}
 
           {/* Meta */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mt-6 text-xs sm:text-sm text-[var(--color-muted)]">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mt-6 text-xs sm:text-sm text-[#718074]">
 
             {publishedDate && (
               <div className="flex items-center gap-1.5">
@@ -95,7 +102,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
       {/* Featured Image */}
       {article.coverImage && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-8 sm:pt-10">
-          <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-white">
+          <div className="overflow-hidden rounded-xl border border-[#e5dfd3] bg-white">
             {/*
               Cover image = the LCP element on article pages (it sits inside the first
               mobile viewport, and is larger than any text block). Intrinsic size comes
@@ -124,7 +131,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
       <article className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <div className="max-w-[760px] mx-auto">
           <div
-            className="patientscure-rich-content patientscure-article-content"
+            className="patientscure-article-content"
             dangerouslySetInnerHTML={{
               __html: lazyLoadContentMedia(article.content || ''),
             }}
@@ -133,7 +140,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
 
         {/* Tags */}
         {article.tags && article.tags.length > 0 && (
-          <div className="mt-12 pt-6 border-t border-[var(--color-border)]">
+          <div className="mt-12 pt-6 border-t border-[#e5dfd3]">
             <div className="flex items-center gap-2 mb-3 text-xs font-semibold text-[#53645a] uppercase tracking-wide">
               <Tag size={15} />
               <span>Tags</span>
@@ -143,7 +150,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
               {article.tags.map((tag, index) => (
                 <span
                   key={`${tag}-${index}`}
-                  className="px-3 py-1.5 rounded-full bg-[var(--color-border)] text-xs text-[#536257]"
+                  className="px-3 py-1.5 rounded-full bg-[#EAE3D5] text-xs text-[#536257]"
                 >
                   {tag}
                 </span>
@@ -153,10 +160,10 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
         )}
 
         {/* Bottom Navigation */}
-        <div className="mt-10 pt-6 border-t border-[var(--color-border)]">
+        <div className="mt-10 pt-6 border-t border-[#e5dfd3]">
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-ink)] transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#1E4D30] hover:text-[#14261B] transition-colors"
           >
             <ArrowLeft size={17} />
             Back to All Articles
@@ -164,16 +171,22 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
         </div>
       </article>
 
-      {/*
-        Article-only additions on top of .patientscure-rich-content (shared
-        with the Disease/Ingredient WYSIWYG fields in globals.css): the
-        drop-cap and enlarged lead paragraph only make sense for a full
-        article, not a compact card, so they stay local to this component.
-      */}
       <style>{`
+        .patientscure-article-content {
+          color: #39483e;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 18px;
+          line-height: 1.85;
+          letter-spacing: -0.005em;
+        }
+
+        .patientscure-article-content p {
+          margin: 0 0 1.45em;
+        }
+
         .patientscure-article-content > p:first-child {
-          font-size: calc(var(--content-body-size) * 1.111);
-          line-height: calc(var(--content-body-lh) * 0.973);
+          font-size: 20px;
+          line-height: 1.8;
           color: #26382c;
         }
 
@@ -183,20 +196,272 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ article }) => {
           font-size: 4.8em;
           line-height: 0.78;
           font-weight: 700;
-          color: var(--color-primary);
+          color: #1E4D30;
           padding-right: 10px;
           padding-top: 7px;
         }
 
+        .patientscure-article-content h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #14261B;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.2em;
+}
+
+        .patientscure-article-content h2 {
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: 32px;
+          line-height: 1.2;
+          font-weight: 700;
+          color: #14261B;
+          margin: 2.2em 0 0.75em;
+          letter-spacing: -0.02em;
+          position: relative;
+          padding-bottom: 12px;
+        }
+
+        .patientscure-article-content h2::after {
+          content: "";
+          display: block;
+          width: 46px;
+          height: 2px;
+          background: #8B6B3E;
+          margin-top: 12px;
+        }
+
+        .patientscure-article-content h3 {
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: 24px;
+          line-height: 1.3;
+          font-weight: 700;
+          color: #1E4D30;
+          margin: 1.8em 0 0.65em;
+        }
+
+        .patientscure-article-content h4 {
+          font-size: 19px;
+          line-height: 1.4;
+          font-weight: 700;
+          color: #14261B;
+          margin: 1.5em 0 0.5em;
+        }
+
+        .patientscure-article-content strong {
+          color: #18291d;
+          font-weight: 700;
+        }
+
+        .patientscure-article-content em {
+          color: #536257;
+        }
+
+        .patientscure-article-content a {
+          color: #1E4D30;
+          font-weight: 600;
+          text-decoration: underline;
+          text-decoration-color: rgba(30, 77, 48, 0.3);
+          text-underline-offset: 3px;
+          transition: all 0.2s ease;
+        }
+
+        .patientscure-article-content a:hover {
+          color: #8B6B3E;
+          text-decoration-color: #8B6B3E;
+        }
+
+        .patientscure-article-content blockquote {
+          position: relative;
+          margin: 2.8em 0;
+          padding: 30px 34px 28px 42px;
+          background: #F3EFE6;
+          border-left: 4px solid #8B6B3E;
+          border-radius: 0 12px 12px 0;
+          color: #39483e;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: 22px;
+          line-height: 1.6;
+          font-style: italic;
+        }
+
+        .patientscure-article-content blockquote::before {
+          content: "“";
+          position: absolute;
+          left: 13px;
+          top: 3px;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: 64px;
+          line-height: 1;
+          color: #8B6B3E;
+          font-style: normal;
+          opacity: 0.65;
+        }
+
+        .patientscure-article-content blockquote p {
+          margin: 0 0 12px;
+        }
+
+        .patientscure-article-content blockquote p:last-child {
+          margin-bottom: 0;
+        }
+
+        .patientscure-article-content blockquote strong {
+          color: #1E4D30;
+        }
+
+        .patientscure-article-content blockquote cite {
+          display: block;
+          margin-top: 14px;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 13px;
+          line-height: 1.5;
+          font-style: normal;
+          font-weight: 600;
+          color: #718074;
+        }
+
+        .patientscure-article-content ul,
+        .patientscure-article-content ol {
+          margin: 1.4em 0 1.7em;
+          padding-left: 1.7em;
+        }
+
+        .patientscure-article-content li {
+          margin: 0.55em 0;
+          padding-left: 0.35em;
+        }
+
+        .patientscure-article-content ul li::marker {
+          color: #8B6B3E;
+        }
+
+        .patientscure-article-content ol li::marker {
+          color: #1E4D30;
+          font-weight: 700;
+        }
+
+        .patientscure-article-content hr {
+          border: 0;
+          border-top: 1px solid #E5DFD3;
+          margin: 3em 0;
+        }
+
+        .patientscure-article-content img {
+          display: block;
+          max-width: 100%;
+          height: auto;
+          margin: 2.5em auto;
+          border-radius: 12px;
+        }
+
+        .patientscure-article-content figure {
+          margin: 2.5em 0;
+        }
+
+        .patientscure-article-content figure img {
+          margin: 0 auto;
+        }
+
+        .patientscure-article-content figcaption {
+          margin-top: 10px;
+          text-align: center;
+          font-size: 13px;
+          line-height: 1.5;
+          color: #718074;
+          font-style: italic;
+        }
+
+        .patientscure-article-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 2.5em 0;
+          font-size: 15px;
+          line-height: 1.6;
+          background: #ffffff;
+          border: 1px solid #E5DFD3;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .patientscure-article-content th {
+          padding: 13px 15px;
+          background: #F3EFE6;
+          color: #14261B;
+          text-align: left;
+          font-weight: 700;
+          border-bottom: 1px solid #DDD5C7;
+        }
+
+        .patientscure-article-content td {
+          padding: 13px 15px;
+          border-bottom: 1px solid #EEE9E0;
+        }
+
+        .patientscure-article-content tr:last-child td {
+          border-bottom: 0;
+        }
+
+        .patientscure-article-content code {
+          padding: 2px 6px;
+          border-radius: 4px;
+          background: #F0ECE3;
+          color: #1E4D30;
+          font-size: 0.9em;
+        }
+
+        .patientscure-article-content h2 + p,
+        .patientscure-article-content h3 + p {
+          margin-top: 0;
+        }
+
         @media (max-width: 640px) {
+          .patientscure-article-content {
+            font-size: 17px;
+            line-height: 1.8;
+          }
+
+          .patientscure-article-content h1 {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 1em;
+  }
+
           .patientscure-article-content > p:first-child {
-            font-size: calc(var(--content-body-size) * 1);
-            line-height: calc(var(--content-body-lh) * 0.946);
+            font-size: 18px;
+            line-height: 1.75;
           }
 
           .patientscure-article-content > p:first-child::first-letter {
             font-size: 4.2em;
             padding-right: 8px;
+          }
+
+          .patientscure-article-content h2 {
+            font-size: 27px;
+            margin-top: 1.9em;
+          }
+
+          .patientscure-article-content h3 {
+            font-size: 22px;
+          }
+
+          .patientscure-article-content blockquote {
+            margin: 2.2em 0;
+            padding: 24px 22px 22px 34px;
+            font-size: 19px;
+          }
+
+          .patientscure-article-content blockquote::before {
+            left: 9px;
+            font-size: 52px;
+          }
+
+          .patientscure-article-content table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
           }
         }
       `}</style>
