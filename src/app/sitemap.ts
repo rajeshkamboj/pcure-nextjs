@@ -13,7 +13,7 @@ import { ContentService } from '@/services/contentService';
 export const revalidate = 60; // ISR: regenerate at most every 60 seconds
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://patientscure.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.patientscure.com';
 
   // ── Static pages ──────────────────────────────────────────────────────────
   const staticPages: MetadataRoute.Sitemap = [
