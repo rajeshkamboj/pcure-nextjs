@@ -33,6 +33,32 @@ const nextConfig = {
     // WordPress media rarely changes once uploaded; cache optimised variants for 30 days.
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  async headers() {
+    return [
+      {
+        source: '/sitemap.xml',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/xml; charset=utf-8',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=300, stale-while-revalidate=600',
+          },
+        ],
+      },
+      {
+        source: '/robots.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain; charset=utf-8',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
