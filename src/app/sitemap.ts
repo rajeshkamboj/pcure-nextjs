@@ -4,7 +4,6 @@ import { ContentService } from '@/services/contentService';
 /**
  * Dynamic sitemap generator for PatientsCure.
  *
- * Next.js automatically serves this as /sitemap.xml
  * Fetches all dynamic content (diseases, remedies, ingredients, articles)
  * and includes static pages.
  *
