@@ -180,10 +180,6 @@ export const Ingredients: React.FC<IngredientsProps> = ({ initialIngredients }) 
                       <span>Potency (Virya):</span>
                       <span className="font-semibold text-[#1c2c1f]">{herb.ayurvedicProperties.virya}</span>
                     </div>
-                    <div className="flex items-center justify-between text-[#59695d]">
-                      <span>Powder Dosage:</span>
-                      <span className="font-semibold text-[#1E4D30]">{herb.recommendedDosage.churna}</span>
-                    </div>
                   </div>
                 </div>
 
