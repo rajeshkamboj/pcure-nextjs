@@ -14,7 +14,7 @@ export const About: React.FC = () => {
         <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
           <Link href="/" className="hover:text-[#1E4D30]">Home</Link>
           <span>/</span>
-          <span className="text-[#1a281e] font-medium">About PatientScure</span>
+          <span className="text-[#1a281e] font-medium">About PatientsCure</span>
         </div>
 
         {/* Hero Banner */}
@@ -26,7 +26,7 @@ export const About: React.FC = () => {
             Restoring Authentic Classical Ayurveda to Modern Public Health
           </h1>
           <p className="text-base sm:text-lg text-[#4d5c50] leading-relaxed">
-            PatientScure was founded to counter commercial dilution, pseudo-scientific claims, and oversimplified wellness fads. We present rigorous, classical Ayurvedic medicine derived directly from the Brihat Trayi Samhitas, reviewed by accredited Ayurvedic clinicians.
+            PatientsCure was founded to counter commercial dilution, pseudo-scientific claims, and oversimplified wellness fads. We present rigorous, classical Ayurvedic medicine derived directly from the Brihat Trayi Samhitas, reviewed by accredited Ayurvedic clinicians.
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export const About: React.FC = () => {
             Important Medical Disclaimer
           </h4>
           <p>
-            The content provided on PatientScure is intended strictly for educational, informational, and lifestyle purposes. It is not designed to replace individual medical diagnoses, physician examinations, or personalized prescription treatments. Always seek the advice of a qualified Ayurvedic doctor (Vaidya) or registered medical healthcare professional regarding any serious chronic illness.
+            The content provided on PatientsCure is intended strictly for educational, informational, and lifestyle purposes. It is not designed to replace individual medical diagnoses, physician examinations, or personalized prescription treatments. Always seek the advice of a qualified Ayurvedic doctor (Vaidya) or registered medical healthcare professional regarding any serious chronic illness.
           </p>
         </div>
 
