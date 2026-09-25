@@ -4,8 +4,42 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { BackToTop } from "@/components/BackToTop";
 
-/** Server component: static links + one tiny client island (<BackToTop />). */
-export const Footer: React.FC = () => {
+interface FooterPost {
+  id: number;
+  title: string;
+  slug: string;
+}
+
+async function getLatestPosts(cpt: string, limit: number = 4): Promise<FooterPost[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_WP_API_URL || "https://your-site.com/wp-json";
+    const url = `${baseUrl}/wp/v2/${cpt}?per_page=${limit}&orderby=date&order=desc&_fields=id,title,slug`;
+    
+    const res = await fetch(url, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    });
+
+    if (!res.ok) {
+      console.error(`Failed to fetch ${cpt}:`, res.status);
+      return [];
+    }
+
+    const data = await res.json();
+    return data.map((post: any) => ({
+      id: post.id,
+      title: post.title.rendered || post.title,
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error(`Error fetching ${cpt}:`, error);
+    return [];
+  }
+}
+
+/** Server component: fetches latest posts from WordPress CPTs. */
+export const Footer: React.FC = async () => {
+  const diseasesPosts = await getLatestPosts("diseases", 4);
+  const remediesPosts = await getLatestPosts("remedies", 4);
   return (
     <footer className="bg-[#14261B] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -45,31 +79,28 @@ export const Footer: React.FC = () => {
               Clinical Pathologies
             </h4>
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
-              <li>
-                <Link href="/diseases/amlapitta-hyperacidity-acid-reflux" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Acid Reflux (Amlapitta)
-                </Link>
-              </li>
-              <li>
-                <Link href="/diseases/sandhivata-osteoarthritis-joint-stiffness" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Joint Stiffness (Sandhivata)
-                </Link>
-              </li>
-              <li>
-                <Link href="/diseases/kasa-pratishyaya-respiratory-congestion" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Respiratory Cough (Kasa)
-                </Link>
-              </li>
-              <li>
-                <Link href="/diseases/anidra-sleep-deprivation-insomnia" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Insomnia (Anidra)
-                </Link>
-              </li>
-              <li>
-                <Link href="/diseases" prefetch={false} className="text-[#64B584] hover:underline font-medium">
-                  Browse All Conditions →
-                </Link>
-              </li>
+              {diseasesPosts.length > 0 ? (
+                <>
+                  {diseasesPosts.map((post) => (
+                    <li key={post.id}>
+                      <Link
+                        href={`/diseases/${post.slug}`}
+                        prefetch={false}
+                        className="hover:text-white hover:underline transition-colors"
+                      >
+                        {post.title}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link href="/diseases" prefetch={false} className="text-[#64B584] hover:underline font-medium">
+                      Browse All Conditions →
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li className="text-[#7a8a7e]">No conditions available</li>
+              )}
             </ul>
           </div>
 
@@ -79,31 +110,28 @@ export const Footer: React.FC = () => {
               Remedies & Herbs
             </h4>
             <ul className="space-y-2 text-xs text-[#b8c9bd]">
-              <li>
-                <Link href="/remedies/haldi-doodh-golden-turmeric-elixir" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Golden Milk (Haldi Doodh)
-                </Link>
-              </li>
-              <li>
-                <Link href="/remedies/ardraka-deepana-ginger-lemon-relish" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Ginger Agni Relish (Ardraka)
-                </Link>
-              </li>
-              <li>
-                <Link href="/ingredients/ashwagandha-indian-ginseng" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Ashwagandha Root Profile
-                </Link>
-              </li>
-              <li>
-                <Link href="/ingredients/amla-indian-gooseberry" prefetch={false} className="hover:text-white hover:underline transition-colors">
-                  Amalaki (Indian Gooseberry)
-                </Link>
-              </li>
-              <li>
-                <Link href="/remedies" prefetch={false} className="text-[#64B584] hover:underline font-medium">
-                  Explore All Desi Nuskhe →
-                </Link>
-              </li>
+              {remediesPosts.length > 0 ? (
+                <>
+                  {remediesPosts.map((post) => (
+                    <li key={post.id}>
+                      <Link
+                        href={`/remedies/${post.slug}`}
+                        prefetch={false}
+                        className="hover:text-white hover:underline transition-colors"
+                      >
+                        {post.title}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link href="/remedies" prefetch={false} className="text-[#64B584] hover:underline font-medium">
+                      Explore All Desi Nuskhe →
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li className="text-[#7a8a7e]">No remedies available</li>
+              )}
             </ul>
           </div>
 
