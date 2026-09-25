@@ -12,26 +12,30 @@ interface FooterPost {
 
 async function getLatestPosts(cpt: string, limit: number = 4): Promise<FooterPost[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_WP_API_URL || "https://your-site.com/wp-json";
+    const baseUrl = process.env.NEXT_PUBLIC_WP_API_URL || "https://api.patientscure.com/wp-json";
     const url = `${baseUrl}/wp/v2/${cpt}?per_page=${limit}&orderby=date&order=desc&_fields=id,title,slug`;
+    
+    console.log(`[Footer] Fetching ${cpt} from:`, url);
     
     const res = await fetch(url, {
       next: { revalidate: 3600 }, // Cache for 1 hour
     });
 
     if (!res.ok) {
-      console.error(`Failed to fetch ${cpt}:`, res.status);
+      console.error(`[Footer] Failed to fetch ${cpt}:`, res.status, res.statusText);
       return [];
     }
 
     const data = await res.json();
+    console.log(`[Footer] Successfully fetched ${cpt}:`, data.length, "posts");
+    
     return data.map((post: any) => ({
       id: post.id,
       title: post.title.rendered || post.title,
       slug: post.slug,
     }));
   } catch (error) {
-    console.error(`Error fetching ${cpt}:`, error);
+    console.error(`[Footer] Error fetching ${cpt}:`, error);
     return [];
   }
 }
