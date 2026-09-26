@@ -46,7 +46,7 @@ export const Footer: React.FC = async () => {
   const remediesPosts = await getLatestPosts("remedies", 4);
   return (
     <footer className="bg-[#14261B] text-[#D0DED4] pt-14 pb-10 border-t border-[#233d2c]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-[#233f2d]">
           {/* Brand Info */}

@@ -63,7 +63,7 @@ export const DiseaseDetail: React.FC<DiseaseDetailProps> = ({
 
   return (
     <div className="bg-[#FAF8F5] min-h-screen py-8 sm:py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Breadcrumb Navigation */}
         <nav className="mb-6 flex items-center gap-2 text-xs text-[#718074] flex-wrap">

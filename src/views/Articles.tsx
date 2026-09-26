@@ -42,7 +42,7 @@ export const Articles: React.FC<ArticlesProps> = ({
 
       {/* Header */}
       <section className="bg-white border-b border-[#e5dfd3]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
 
           <span className="text-xs font-semibold text-[#8B6B3E] uppercase tracking-widest">
             Editorial Journal

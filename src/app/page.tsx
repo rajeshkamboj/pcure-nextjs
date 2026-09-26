@@ -37,7 +37,7 @@ export default async function HomePage() {
           </svg>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E5ECE7] text-[#1E4D30] text-xs font-semibold uppercase tracking-wider mb-4 border border-[#cad9cf]">

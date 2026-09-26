@@ -40,7 +40,7 @@ export const Ingredients: React.FC<IngredientsProps> = ({ initialIngredients }) 
 
   return (
     <div className="bg-[#FAF8F5] min-h-screen py-10 sm:py-14">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Breadcrumb Header */}
         <div className="mb-6 flex items-center gap-2 text-xs text-[#718074]">
@@ -200,4 +200,4 @@ export const Ingredients: React.FC<IngredientsProps> = ({ initialIngredients }) 
       </div>
     </div>
   );
-};
+};
