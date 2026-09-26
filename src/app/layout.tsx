@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getThemeSettings } from "@/lib/theme";
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 /*
  * Fonts are downloaded at build time and served from our own origin
@@ -63,24 +64,26 @@ export default async function RootLayout({
       <head>
         <style id="theme-vars" dangerouslySetInnerHTML={{ __html: themeCss }} />
       </head>
-      <body className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-ink)] antialiased">
-        <Header />
+<body className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-ink)] antialiased">
+  <GoogleAnalytics />
 
-        <main className="flex-grow">{children}</main>
+  <Header />
 
-        <Footer />
+  <main className="flex-grow">{children}</main>
 
-        {/* AdSense loader */}
-        {ADSENSE_CLIENT ? (
-          <Script
-            id="adsense-loader"
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-            crossOrigin="anonymous"
-            strategy="lazyOnload"
-          />
-        ) : null}
-      </body>
+  <Footer />
+
+  {/* AdSense loader */}
+  {ADSENSE_CLIENT ? (
+    <Script
+      id="adsense-loader"
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+      crossOrigin="anonymous"
+      strategy="lazyOnload"
+    />
+  ) : null}
+</body>
     </html>
   );
 }
