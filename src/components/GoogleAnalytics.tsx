@@ -3,6 +3,7 @@
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -12,9 +13,6 @@ function GoogleAnalyticsPageTracker() {
 
   useEffect(() => {
     if (!GA_ID) return;
-
-    // Construct the full URL with search params
-    const url = `${pathname}?${searchParams.toString()}`;
 
     // Send page view to Google Analytics
     if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -49,7 +47,9 @@ export default function GoogleAnalytics() {
         `}
       </Script>
 
-      <GoogleAnalyticsPageTracker />
+      <Suspense fallback={null}>
+        <GoogleAnalyticsPageTracker />
+      </Suspense>
     </>
   );
 }

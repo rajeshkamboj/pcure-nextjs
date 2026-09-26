@@ -26,17 +26,7 @@ export async function POST(req: NextRequest) {
       return await sendViaResend({ name, email, subject, message });
     }
 
-    // Option 2: Using SendGrid
-    if (process.env.SENDGRID_API_KEY) {
-      return await sendViaSendGrid({ name, email, subject, message });
-    }
-
-    // Option 3: Using NodeMailer (if you have SMTP credentials)
-    if (process.env.SMTP_HOST) {
-      return await sendViaSMTP({ name, email, subject, message });
-    }
-
-    // Option 4: Fallback - save to database or log
+    // Fallback - save to database or log
     console.log('Contact form submission:', { name, email, subject, message });
     return NextResponse.json({ success: true });
 
@@ -73,71 +63,6 @@ async function sendViaResend({ name, email, subject, message }: any) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Resend error:', error);
-    throw error;
-  }
-}
-
-// Option 2: SendGrid Email Service
-async function sendViaSendGrid({ name, email, subject, message }: any) {
-  try {
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-    await sgMail.send({
-      to: 'hello@patientscure.com',
-      from: 'noreply@patientscure.com',
-      replyTo: email,
-      subject: `New Contact Form: ${subject} from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-      `,
-    });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('SendGrid error:', error);
-    throw error;
-  }
-}
-
-// Option 3: Nodemailer (SMTP)
-async function sendViaSMTP({ name, email, subject, message }: any) {
-  try {
-    const nodemailer = require('nodemailer');
-
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
-
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || 'noreply@patientscure.com',
-      to: 'hello@patientscure.com',
-      replyTo: email,
-      subject: `New Contact Form: ${subject} from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-      `,
-    });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('SMTP error:', error);
     throw error;
   }
 }
